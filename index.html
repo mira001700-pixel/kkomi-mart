@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>꼬미마트</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Gowun Dodum', sans-serif; color: #333; background: #f5faff; }
+
+  /* 상단 */
+  header {
+    background: linear-gradient(90deg, #00c9a7, #5b86e5, #a86ee6, #ff6ec7);
+    color: white; padding: 20px; text-align: center;
+  }
+  header h1 { font-size: 28px; }
+  header p { margin-top: 5px; font-size: 14px; }
+
+  /* 무료배송 안내 */
+  .shipping-notice {
+    background: #ffe680; color: #4b3f8c; text-align: center;
+    padding: 8px; font-size: 14px; font-weight: bold;
+  }
+
+  /* 메뉴 */
+  nav {
+    background: linear-gradient(90deg, #5b86e5, #a86ee6);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .nav-links { display: flex; }
+  nav a { color: white; text-decoration: none; padding: 14px 20px; font-size: 15px; cursor: pointer; }
+  nav a:hover { background: rgba(255,255,255,0.2); }
+  nav a.active { background: rgba(255,255,255,0.3); font-weight: bold; }
+  .cart-btn {
+    background: none; border: none; color: white; font-size: 15px;
+    cursor: pointer; padding: 14px 20px; font-family: inherit;
+  }
+  .cart-btn:hover { background: rgba(255,255,255,0.2); }
+  #cart-count {
+    background: #ff6ec7; border-radius: 50%; padding: 1px 7px;
+    font-size: 11px; margin-left: 4px;
+  }
+
+  /* 배너 - 바다 사진 */
+  .banner {
+    background: linear-gradient(rgba(15,32,39,0.45), rgba(15,32,39,0.45)), url('images/banner-sea.jpg');
+    background-size: cover;
+    background-position: center;
+    text-align: center; padding: 80px 20px;
+  }
+  .banner h2 { font-size: 26px; color: #fff; margin-bottom: 15px; text-shadow: 0 2px 12px rgba(0,0,0,0.5); }
+  .banner button {
+    background: linear-gradient(90deg, #00c9a7, #5b86e5, #a86ee6);
+    color: white; border: none;
+    padding: 12px 28px; font-size: 16px; border-radius: 6px; cursor: pointer;
+  }
+  .banner button:hover { opacity: 0.85; }
+
+  /* 상품 */
+  .products { padding: 40px 20px; text-align: center; }
+  .products h2 { margin-bottom: 25px; color: #4b3f8c; }
+  .product-list { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+  .card {
+    background: white; border: 1px solid #d8c7f0; border-radius: 10px;
+    width: 200px; padding: 20px; position: relative;
+  }
+  .card .emoji { font-size: 50px; margin-bottom: 10px; }
+  .card .thumb { width: 100%; height: 130px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; }
+  .card h3 { font-size: 16px; margin-bottom: 8px; }
+  .card .desc { font-size: 12px; color: #777; line-height: 1.5; margin-bottom: 10px; }
+  .color-select {
+    width: 100%; padding: 6px; margin-bottom: 8px; border-radius: 6px;
+    border: 1px solid #ccc; font-family: inherit; font-size: 13px;
+  }
+  .handmade {
+    display: inline-block; background: #ff6ec7; color: white;
+    font-size: 12px; padding: 3px 10px; border-radius: 12px; margin-bottom: 8px;
+  }
+  .best {
+    display: inline-block; background: #e63946; color: white;
+    font-size: 12px; padding: 3px 10px; border-radius: 12px; margin-bottom: 8px;
+  }
+  .popular {
+    display: inline-block; background: #5b86e5; color: white;
+    font-size: 12px; padding: 3px 10px; border-radius: 12px; margin-bottom: 8px;
+  }
+  .old-price { color: #999; text-decoration: line-through; font-size: 13px; }
+  .price { color: #e63946; font-weight: bold; font-size: 18px; }
+  .add-btn {
+    margin-top: 10px; width: 100%; padding: 8px; border: none; border-radius: 6px;
+    background: linear-gradient(90deg, #5b86e5, #a86ee6); color: white;
+    font-size: 14px; cursor: pointer; font-family: inherit;
+  }
+  .add-btn:hover { opacity: 0.85; }
+
+  /* 장바구니 & 결제 모달 */
+  .overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+    z-index: 100; align-items: center; justify-content: center; padding: 20px;
+  }
+  .overlay.show { display: flex; }
+  .modal {
+    background: white; border-radius: 12px; padding: 24px;
+    width: 100%; max-width: 420px; max-height: 85vh; overflow-y: auto;
+  }
+  .modal h2 { color: #4b3f8c; margin-bottom: 16px; }
+  .cart-item {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    padding: 10px 0; border-bottom: 1px solid #eee; font-size: 14px;
+  }
+  .cart-item-name { flex: 1; text-align: left; }
+  .qty-control { display: flex; align-items: center; gap: 6px; }
+  .qty-control button {
+    width: 24px; height: 24px; border: 1px solid #ccc; background: #f5faff;
+    border-radius: 4px; cursor: pointer;
+  }
+  .cart-item-price { width: 85px; text-align: right; color: #e63946; font-weight: bold; }
+  .remove-btn { background: none; border: none; color: #999; cursor: pointer; font-size: 15px; }
+  .empty { color: #999; padding: 20px 0; text-align: center; }
+  .cart-total { text-align: right; margin-top: 14px; font-weight: bold; font-size: 16px; color: #4b3f8c; }
+  .modal-actions { display: flex; gap: 10px; margin-top: 18px; }
+  .modal-actions button {
+    flex: 1; padding: 10px; border: none; border-radius: 6px; cursor: pointer;
+    font-size: 14px; font-family: inherit;
+  }
+  .modal-actions button.secondary { background: #eee; color: #333; }
+  .modal-actions button.primary {
+    background: linear-gradient(90deg, #00c9a7, #5b86e5, #a86ee6); color: white;
+  }
+  #checkout-form label { display: block; margin-bottom: 10px; font-size: 13px; text-align: left; color: #555; }
+  #checkout-form input, #checkout-form select {
+    width: 100%; padding: 8px; margin-top: 4px; border: 1px solid #ccc;
+    border-radius: 6px; font-family: inherit; font-size: 14px;
+  }
+  .summary-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px; }
+  .summary-row.total {
+    border-top: 1px solid #ddd; margin-top: 8px; padding-top: 10px;
+    font-weight: bold; color: #e63946; font-size: 16px;
+  }
+  /* 연락처 */
+  footer {
+    background: linear-gradient(90deg, #5b86e5, #a86ee6, #ff6ec7);
+    color: white; text-align: center; padding: 20px; font-size: 14px;
+  }
+</style>
+</head>
+<body>
+
+  <!-- 상단: 쇼핑몰 이름 + 소개 -->
+  <header>
+    <h1>🎣 꼬미마트</h1>
+    <p>선상낚시인을 위한 낚시용품 전문점</p>
+  </header>
+
+  <!-- 무료배송 안내 -->
+  <div class="shipping-notice">🚚 50,000원 이상 구매 시 무료배송!</div>
+
+  <!-- 메뉴 4개 + 장바구니 -->
+  <nav>
+    <div class="nav-links">
+      <a href="#" class="active" onclick="filterProducts('전체상품', this); return false;">전체상품</a>
+      <a href="#" onclick="filterProducts('에기걸이', this); return false;">에기걸이</a>
+      <a href="#" onclick="filterProducts('훅캡', this); return false;">훅캡</a>
+      <a href="#" onclick="filterProducts('에기', this); return false;">에기</a>
+    </div>
+    <button class="cart-btn" onclick="openCart()">🛒 장바구니<span id="cart-count">0</span></button>
+  </nav>
+
+  <!-- 큰 배너 -->
+  <div class="banner">
+    <h2>🖐 직접 만든 핸드메이드 제품, 꼬미마트와 함께하세요</h2>
+    <button onclick="alert('이벤트 페이지 준비중입니다!')">지금 확인하기</button>
+  </div>
+
+  <!-- 상품 카드 6개 -->
+  <div class="products">
+    <h2>인기 상품</h2>
+    <div class="product-list">
+      <div class="card" data-category="에기걸이">
+        <span class="best">⭐ 베스트</span>
+        <span class="handmade">🖐 핸드메이드</span>
+        <img class="thumb" src="images/product-zzugap.jpg" alt="쭈갑 에기걸이">
+        <h3>쭈갑 에기걸이</h3>
+        <p class="desc">두족류에 필요한 에기걸이를 파라코드를 이용해 손수 직접 꼬아 만드는 핸드메이드 제품입니다. 운영자 역시 낚시를 취미로 둔 앵글러로서 사용자의 마음을 담았습니다.<br>사이즈: 약 40cm</p>
+        <select id="zzugap-color" class="color-select">
+          <option value="블랙&레인보우">1) 블랙&레인보우</option>
+          <option value="블랙&네이비">2) 블랙&네이비</option>
+          <option value="카키&오렌지">3) 카키&오렌지</option>
+          <option value="블랙&레드">4) 블랙&레드</option>
+          <option value="블랙&그린">5) 블랙&그린</option>
+          <option value="블랙&퍼플">6) 블랙&퍼플</option>
+          <option value="블랙&핑크">7) 블랙&핑크</option>
+          <option value="블랙&옐로우">8) 블랙&옐로우</option>
+        </select>
+        <p class="price">30,000원</p>
+        <button class="add-btn" onclick="addToCart('쭈갑 에기걸이(' + document.getElementById('zzugap-color').value + ')', 30000)">장바구니 담기</button>
+      </div>
+      <div class="card" data-category="에기걸이">
+        <span class="best">⭐ 베스트</span>
+        <span class="handmade">🖐 핸드메이드</span>
+        <img class="thumb" src="images/product-necklace.jpg" alt="팁런 에기걸이">
+        <h3>팁런 에기걸이</h3>
+        <p class="desc">팁런에기는 일반 에기와 달리 무게가 있고 마스크까지 더해져 무게가 더 나갑니다. 용도에 맞게 한땀한땀 수작업 하였습니다. 무거운 샤클 고리를 사용하지 않고 스텐 링을 같은 색상으로 작업하였습니다.</p>
+        <select id="tiplun-color" class="color-select">
+          <option value="블랙&레인보우">1) 블랙&레인보우</option>
+          <option value="블랙&레드">2) 블랙&레드</option>
+          <option value="카키&오렌지">3) 카키&오렌지</option>
+          <option value="블랙&그린">4) 블랙&그린</option>
+          <option value="블랙&네이비">5) 블랙&네이비</option>
+          <option value="블랙&퍼플">6) 블랙&퍼플</option>
+          <option value="블랙&핑크">7) 블랙&핑크</option>
+        </select>
+        <select id="tiplun-length" class="color-select">
+          <option value="40cm|0">1) 40cm (+0원)</option>
+          <option value="50cm|5000">2) 50cm (+5,000원)</option>
+          <option value="60cm|10000">3) 60cm (+10,000원)</option>
+        </select>
+        <p class="price">40,000원</p>
+        <button class="add-btn" onclick="addTiplunToCart()">장바구니 담기</button>
+      </div>
+      <div class="card" data-category="에기걸이">
+        <span class="handmade">🖐 핸드메이드</span>
+        <span class="popular">🔥 인기상품</span>
+        <img class="thumb" src="images/product-tiplun.jpg" alt="에깅낚시목걸이&로드스트랩세트">
+        <h3>에깅낚시목걸이&로드스트랩세트</h3>
+        <p class="desc">낚시 중 소품이나 장비를 안전하게 고정해주는 고강도 파라코드 스트랩입니다.<br>사이즈: 목걸이 약 48cm / 로드스트랩 약 25~30cm</p>
+        <select id="necklace-color" class="color-select">
+          <option value="레인보우">1) 레인보우</option>
+          <option value="파스텔레인보우">2) 파스텔레인보우</option>
+          <option value="블랙&핑크">3) 블랙&핑크</option>
+        </select>
+        <p class="price">15,000원</p>
+        <button class="add-btn" onclick="addToCart('에깅낚시목걸이&로드스트랩세트(' + document.getElementById('necklace-color').value + ')', 15000)">장바구니 담기</button>
+      </div>
+      <div class="card" data-category="훅캡">
+        <span class="popular">🔥 인기상품</span>
+        <img class="thumb" src="images/product-hookcap.jpg" alt="전기도금 훅캡">
+        <h3>전기도금 훅캡</h3>
+        <select id="hookcap-color" class="color-select">
+          <option value="레드">1) 레드</option>
+          <option value="핑크">2) 핑크</option>
+          <option value="오렌지">3) 오렌지</option>
+          <option value="그린">4) 그린</option>
+          <option value="블루">5) 블루</option>
+          <option value="퍼플">6) 퍼플</option>
+          <option value="핑크그린">7) 핑크그린</option>
+          <option value="그린퍼플">8) 그린퍼플</option>
+          <option value="그린핑크">9) 그린핑크</option>
+        </select>
+        <p class="old-price">1,500원</p>
+        <p class="price">1,000원</p>
+        <button class="add-btn" onclick="addToCart('전기도금 훅캡(' + document.getElementById('hookcap-color').value + ')', 1000)">장바구니 담기</button>
+      </div>
+      <div class="card" data-category="에기">
+        <span class="handmade">🖐 핸드메이드</span>
+        <div class="emoji">📦</div>
+        <h3>수제 마이크로박스 에기</h3>
+        <p class="old-price">7,500원</p>
+        <p class="price">6,500원</p>
+        <button class="add-btn" onclick="addToCart('수제 마이크로박스 에기', 6500)">장바구니 담기</button>
+      </div>
+      <div class="card" data-category="에기걸이">
+        <span class="handmade">🖐 핸드메이드</span>
+        <div class="emoji">🔗</div>
+        <h3>더유닛 에기걸이</h3>
+        <p class="price">15,000원</p>
+        <button class="add-btn" onclick="addToCart('더유닛 에기걸이', 15000)">장바구니 담기</button>
+      </div>
+      <div class="card" data-category="에기걸이">
+        <span class="handmade">🖐 핸드메이드</span>
+        <div class="emoji">🌙</div>
+        <h3>야광파라코드 에기걸이</h3>
+        <p class="price">40,000원</p>
+        <button class="add-btn" onclick="addToCart('야광파라코드 에기걸이', 40000)">장바구니 담기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 연락처 -->
+  <footer>
+    <p>꼬미마트 고객센터</p>
+    <p>전화: 010-3988-1106</p>
+    <p>사업자등록번호: 894-25-02008</p>
+    <p>소재지: 인천광역시 동구 방축로37번길 30</p>
+    <p>🖐 모든 제품은 직접 만든 핸드메이드 제품입니다</p>
+  </footer>
+
+  <!-- 장바구니 모달 -->
+  <div id="cart-overlay" class="overlay" onclick="closeIfOverlay(event, 'cart-overlay')">
+    <div class="modal">
+      <h2>🛒 장바구니</h2>
+      <div id="cart-items"></div>
+      <div class="cart-total">총 금액: <span id="cart-total">0</span>원</div>
+      <div class="modal-actions">
+        <button class="secondary" onclick="closeModal('cart-overlay')">계속 쇼핑하기</button>
+        <button class="primary" onclick="openCheckout()">결제하기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 결제 모달 -->
+  <div id="checkout-overlay" class="overlay" onclick="closeIfOverlay(event, 'checkout-overlay')">
+    <div class="modal">
+      <h2>💳 결제하기</h2>
+      <div id="checkout-summary"></div>
+      <form id="checkout-form" onsubmit="submitCheckout(event)">
+        <label>이름
+          <input type="text" required>
+        </label>
+        <label>연락처
+          <input type="tel" required placeholder="010-0000-0000">
+        </label>
+        <label>배송 주소
+          <input type="text" required>
+        </label>
+        <label>결제수단
+          <select>
+            <option>신용카드</option>
+            <option>무통장입금</option>
+            <option>카카오페이</option>
+          </select>
+        </label>
+        <div class="modal-actions">
+          <button type="button" class="secondary" onclick="closeModal('checkout-overlay')">취소</button>
+          <button type="submit" class="primary">결제 완료</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function filterProducts(category, linkEl) {
+      document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+      linkEl.classList.add('active');
+
+      document.querySelectorAll('.product-list .card').forEach(card => {
+        const match = category === '전체상품' || card.dataset.category === category;
+        card.style.display = match ? '' : 'none';
+      });
+    }
+
+    let cart = [];
+
+    function addToCart(name, price) {
+      const item = cart.find(i => i.name === name);
+      if (item) { item.qty++; } else { cart.push({ name, price, qty: 1 }); }
+      updateCartUI();
+    }
+
+    function changeQty(idx, delta) {
+      cart[idx].qty += delta;
+      if (cart[idx].qty <= 0) cart.splice(idx, 1);
+      updateCartUI();
+    }
+
+    function removeItem(idx) {
+      cart.splice(idx, 1);
+      updateCartUI();
+    }
+
+    function cartTotal() {
+      return cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+    }
+
+    function updateCartUI() {
+      document.getElementById('cart-count').textContent = cart.reduce((sum, i) => sum + i.qty, 0);
+
+      const container = document.getElementById('cart-items');
+      if (cart.length === 0) {
+        container.innerHTML = '<p class="empty">장바구니가 비어있습니다.</p>';
+      } else {
+        container.innerHTML = cart.map((item, idx) => `
+          <div class="cart-item">
+            <span class="cart-item-name">${item.name}</span>
+            <div class="qty-control">
+              <button type="button" onclick="changeQty(${idx}, -1)">-</button>
+              <span>${item.qty}</span>
+              <button type="button" onclick="changeQty(${idx}, 1)">+</button>
+            </div>
+            <span class="cart-item-price">${(item.price * item.qty).toLocaleString()}원</span>
+            <button type="button" class="remove-btn" onclick="removeItem(${idx})">✕</button>
+          </div>
+        `).join('');
+      }
+      document.getElementById('cart-total').textContent = cartTotal().toLocaleString();
+    }
+
+    function addTiplunToCart() {
+      const color = document.getElementById('tiplun-color').value;
+      const [length, extra] = document.getElementById('tiplun-length').value.split('|');
+      addToCart(`팁런 에기걸이(${color}, ${length})`, 40000 + Number(extra));
+    }
+
+    function openCart() {
+      document.getElementById('cart-overlay').classList.add('show');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('show');
+    }
+
+    function closeIfOverlay(e, id) {
+      if (e.target.id === id) closeModal(id);
+    }
+
+    const FREE_SHIPPING_THRESHOLD = 50000;
+    const SHIPPING_FEE = 3000;
+
+    function shippingFee() {
+      return cartTotal() >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
+    }
+
+    function openCheckout() {
+      if (cart.length === 0) { alert('장바구니가 비어있습니다.'); return; }
+      closeModal('cart-overlay');
+      const shipping = shippingFee();
+      const shippingLabel = shipping === 0 ? '무료' : `${shipping.toLocaleString()}원`;
+      document.getElementById('checkout-summary').innerHTML = cart.map(i => `
+        <div class="summary-row"><span>${i.name} x${i.qty}</span><span>${(i.price * i.qty).toLocaleString()}원</span></div>
+      `).join('')
+        + `<div class="summary-row"><span>배송비</span><span>${shippingLabel}</span></div>`
+        + `<div class="summary-row total"><span>총 결제금액</span><span>${(cartTotal() + shipping).toLocaleString()}원</span></div>`;
+      document.getElementById('checkout-overlay').classList.add('show');
+    }
+
+    function submitCheckout(e) {
+      e.preventDefault();
+      alert('결제가 완료되었습니다! 감사합니다 🎣');
+      cart = [];
+      updateCartUI();
+      closeModal('checkout-overlay');
+      e.target.reset();
+    }
+
+    updateCartUI();
+  </script>
+
+</body>
+</html>
