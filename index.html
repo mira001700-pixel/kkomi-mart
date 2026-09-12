@@ -5,7 +5,7 @@
 <title>꼬미마트</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&family=Noto+Serif+KR:wght@500;700;900&display=swap" rel="stylesheet">
 <style>
   :root {
     --navy-950: #071b2c;
@@ -20,7 +20,7 @@
     --text: #1b2430;
     --text-muted: #6b7684;
     --border: #e3e7eb;
-    --price: #b8342f;
+    --price: #8a2530;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: 'Noto Sans KR', sans-serif; color: var(--text); background: var(--bg); }
@@ -31,11 +31,16 @@
     color: #fff; padding: 30px 20px 26px; text-align: center;
   }
   header h1 {
-    font-size: 30px; font-weight: 900; letter-spacing: 0.5px;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 30px; font-weight: 700; letter-spacing: 1px;
   }
   header p {
-    margin-top: 8px; font-size: 13px; color: var(--gold-light);
-    letter-spacing: 1px; font-weight: 500;
+    margin-top: 10px; font-size: 12px; color: var(--gold-light);
+    letter-spacing: 2px; font-weight: 500;
+  }
+  header .rule {
+    width: 40px; height: 1px; background: var(--gold);
+    margin: 14px auto 0; opacity: 0.7;
   }
 
   /* 메뉴 */
@@ -91,8 +96,9 @@
     letter-spacing: 3px; font-weight: 700; margin-bottom: 14px; text-transform: uppercase;
   }
   .banner h2 {
-    font-size: 30px; font-weight: 900; color: #fff; margin-bottom: 12px;
-    text-shadow: 0 2px 14px rgba(0,0,0,0.5); line-height: 1.4;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 30px; font-weight: 700; color: #fff; margin-bottom: 14px;
+    text-shadow: 0 2px 14px rgba(0,0,0,0.5); line-height: 1.5;
   }
   .banner p.sub { color: rgba(255,255,255,0.85); font-size: 14px; margin-bottom: 22px; }
   .trust-badges {
@@ -117,15 +123,22 @@
     display: block; color: var(--teal); font-size: 12px; font-weight: 700;
     letter-spacing: 3px; margin-bottom: 8px; text-transform: uppercase;
   }
-  .products h2 { margin-bottom: 34px; color: var(--navy-950); font-size: 24px; font-weight: 900; }
+  .products h2 {
+    font-family: 'Noto Serif KR', serif;
+    margin-bottom: 34px; color: var(--navy-950); font-size: 24px; font-weight: 700;
+  }
   .product-list { display: flex; justify-content: center; gap: 22px; flex-wrap: wrap; }
   .card {
-    background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px;
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px;
     width: 210px; padding: 20px; position: relative;
     box-shadow: 0 1px 3px rgba(11,39,64,0.06);
-    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
   }
-  .card:hover { box-shadow: 0 10px 24px rgba(11,39,64,0.12); transform: translateY(-3px); }
+  .card:hover {
+    box-shadow: 0 14px 28px rgba(11,39,64,0.13);
+    transform: translateY(-3px);
+    border-color: var(--gold);
+  }
   .card .emoji { font-size: 48px; margin-bottom: 10px; }
   .card .thumb { width: 100%; height: 130px; object-fit: cover; border-radius: 8px; margin-bottom: 12px; }
   .media { position: relative; border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
@@ -156,19 +169,24 @@
   }
   .color-select:focus { outline: none; border-color: var(--navy-700); }
   .handmade, .best, .popular {
-    display: inline-block; font-size: 11px; font-weight: 700;
-    padding: 3px 9px; border-radius: 3px; margin: 0 4px 8px 0;
+    display: inline-block; font-size: 10px; font-weight: 700;
+    padding: 3px 8px; border-radius: 2px; margin: 0 4px 8px 0;
+    letter-spacing: 0.6px; text-transform: uppercase;
+    background: transparent; border: 1px solid currentColor;
+  }
+  .handmade { color: var(--teal); }
+  .best { color: var(--gold); border-color: var(--gold); }
+  .popular { color: var(--navy-700); }
+  .old-price { color: #a3aab3; text-decoration: line-through; font-size: 12px; }
+  .price {
+    color: var(--price); font-weight: 700; font-size: 19px;
     letter-spacing: 0.3px;
   }
-  .handmade { background: rgba(15,122,118,0.12); color: var(--teal); }
-  .best { background: var(--navy-950); color: var(--gold-light); }
-  .popular { background: rgba(201,162,74,0.15); color: #96712a; }
-  .old-price { color: #a3aab3; text-decoration: line-through; font-size: 12px; }
-  .price { color: var(--price); font-weight: 800; font-size: 19px; }
   .add-btn {
-    margin-top: 12px; width: 100%; padding: 10px; border: none; border-radius: 6px;
+    margin-top: 12px; width: 100%; padding: 11px; border: none; border-radius: 4px;
     background: var(--navy-950); color: #fff;
-    font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit;
+    font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit;
+    letter-spacing: 1px; text-transform: uppercase;
     transition: background 0.15s ease;
   }
   .add-btn:hover { background: var(--navy-700); }
@@ -248,6 +266,7 @@
   <header>
     <h1>🎣 꼬미마트</h1>
     <p>낚시인만을 위한 핸드메이드 제작 전문점</p>
+    <div class="rule"></div>
   </header>
 
   <!-- 메뉴 4개 + 장바구니 -->
