@@ -225,7 +225,11 @@
       <div class="card" data-category="에기걸이">
         <button class="wish-btn" data-name="야광파라코드 에기걸이" onclick="toggleWish(this)">♡</button>
         <span class="handmade">🖐 핸드메이드</span>
-        <div class="emoji">🌙</div>
+        <div class="carousel">
+          <img id="glow-img" class="thumb" src="images/product-glow-khaki.jpg" alt="야광파라코드 에기걸이">
+          <button type="button" class="carousel-btn prev" onclick="changeSlide('glow', -1)">‹</button>
+          <button type="button" class="carousel-btn next" onclick="changeSlide('glow', 1)">›</button>
+        </div>
         <h3>야광파라코드 에기걸이</h3>
         <p class="price">40,000원</p>
         <button class="add-btn" onclick="addToCart('야광파라코드 에기걸이', 40000)">장바구니 담기</button>
@@ -422,9 +426,19 @@
     }
 
     const carouselImages = {
-      necklace: ['images/product-tiplun.jpg']
+      necklace: [
+        'images/product-tiplun.jpg',
+        'images/product-necklace-blackpink.jpg',
+        'images/product-necklace-rainbow.jpg'
+      ],
+      glow: [
+        'images/product-glow-khaki.jpg',
+        'images/product-glow-black.jpg',
+        'images/product-glow-beige.jpg',
+        'images/product-glow-lit.jpg'
+      ]
     };
-    const carouselIndex = { necklace: 0 };
+    const carouselIndex = { necklace: 0, glow: 0 };
 
     function changeSlide(key, delta) {
       const imgs = carouselImages[key];
