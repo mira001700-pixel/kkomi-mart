@@ -71,6 +71,16 @@
   }
   .card .emoji { font-size: 50px; margin-bottom: 10px; }
   .card .thumb { width: 100%; height: 130px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; }
+  .carousel { position: relative; }
+  .carousel-btn {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: rgba(0,0,0,0.45); color: white; border: none;
+    width: 26px; height: 26px; border-radius: 50%; cursor: pointer;
+    font-size: 16px; line-height: 1; margin-top: -5px;
+  }
+  .carousel-btn.prev { left: 6px; }
+  .carousel-btn.next { right: 6px; }
+  .carousel-btn:hover { background: rgba(0,0,0,0.65); }
   .card h3 { font-size: 16px; margin-bottom: 8px; }
   .card .desc { font-size: 12px; color: #777; line-height: 1.5; margin-bottom: 10px; }
   .color-select {
@@ -236,7 +246,11 @@
       <div class="card" data-category="에기걸이">
         <span class="handmade">🖐 핸드메이드</span>
         <span class="popular">🔥 인기상품</span>
-        <img class="thumb" src="images/product-tiplun.jpg" alt="에깅낚시목걸이&로드스트랩세트">
+        <div class="carousel">
+          <img id="necklace-img" class="thumb" src="images/product-tiplun.jpg" alt="에깅낚시목걸이&로드스트랩세트">
+          <button type="button" class="carousel-btn prev" onclick="changeSlide('necklace', -1)">‹</button>
+          <button type="button" class="carousel-btn next" onclick="changeSlide('necklace', 1)">›</button>
+        </div>
         <h3>에깅낚시목걸이&로드스트랩세트</h3>
         <p class="desc">낚시 중 소품이나 장비를 안전하게 고정해주는 고강도 파라코드 스트랩입니다.<br>사이즈: 목걸이 약 48cm / 로드스트랩 약 25~30cm</p>
         <select id="necklace-color" class="color-select">
@@ -363,6 +377,17 @@
         const match = category === '전체상품' || card.dataset.category === category;
         card.style.display = match ? '' : 'none';
       });
+    }
+
+    const carouselImages = {
+      necklace: ['images/product-tiplun.jpg']
+    };
+    const carouselIndex = { necklace: 0 };
+
+    function changeSlide(key, delta) {
+      const imgs = carouselImages[key];
+      carouselIndex[key] = (carouselIndex[key] + delta + imgs.length) % imgs.length;
+      document.getElementById(key + '-img').src = imgs[carouselIndex[key]];
     }
 
     let cart = [];
