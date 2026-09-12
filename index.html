@@ -326,8 +326,13 @@
           <option value="카키&스카이">11) 카키&스카이</option>
           <option value="카키&핑크">12) 카키&핑크</option>
         </select>
+        <select id="glow-length" class="color-select">
+          <option value="40cm|0">1) 40cm (+0원)</option>
+          <option value="50cm|5000">2) 50cm (+5,000원)</option>
+          <option value="60cm|10000">3) 60cm (+10,000원)</option>
+        </select>
         <p class="price">40,000원</p>
-        <button class="add-btn" onclick="addToCart('야광팁런에기걸이(' + document.getElementById('glow-color').value + ')', 40000)">장바구니 담기</button>
+        <button class="add-btn" onclick="addGlowToCart()">장바구니 담기</button>
       </div>
       <div class="card" data-category="에기걸이">
         <button class="wish-btn" data-name="팁런 에기걸이" onclick="toggleWish(this)">♡</button>
@@ -585,6 +590,12 @@
       const color = document.getElementById('tiplun-color').value;
       const [length, extra] = document.getElementById('tiplun-length').value.split('|');
       addToCart(`팁런 에기걸이(${color}, ${length})`, 40000 + Number(extra));
+    }
+
+    function addGlowToCart() {
+      const color = document.getElementById('glow-color').value;
+      const [length, extra] = document.getElementById('glow-length').value.split('|');
+      addToCart(`야광팁런에기걸이(${color}, ${length})`, 40000 + Number(extra));
     }
 
     function openCart() {
