@@ -38,14 +38,6 @@
     letter-spacing: 1px; font-weight: 500;
   }
 
-  /* 무료배송 & 제작기간 안내 */
-  .shipping-notice, .production-notice {
-    background: var(--navy-900); color: #fff; text-align: center;
-    padding: 9px; font-size: 13px; font-weight: 500;
-    border-top: 1px solid rgba(255,255,255,0.08);
-  }
-  .shipping-notice { font-weight: 700; color: var(--gold-light); }
-
   /* 메뉴 */
   nav {
     background: var(--navy-900);
@@ -72,13 +64,18 @@
 
   /* 상품 검색창 */
   .search-bar {
-    background: var(--card-bg); padding: 16px 20px; text-align: center;
+    background: var(--card-bg); padding: 18px 20px; text-align: center;
     border-bottom: 1px solid var(--border);
   }
+  .search-bar .search-wrap { position: relative; width: 100%; max-width: 440px; margin: 0 auto; }
+  .search-bar .search-icon {
+    position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+    font-size: 14px; color: var(--text-muted); pointer-events: none;
+  }
   .search-bar input {
-    width: 100%; max-width: 420px; padding: 11px 18px; border-radius: 24px;
+    width: 100%; padding: 12px 18px 12px 40px; border-radius: 24px;
     border: 1px solid var(--border); font-family: inherit; font-size: 14px;
-    background: var(--bg);
+    background: var(--bg); box-shadow: inset 0 1px 2px rgba(11,39,64,0.04);
   }
   .search-bar input:focus { outline: none; border-color: var(--navy-700); background: #fff; }
 
@@ -97,7 +94,16 @@
     font-size: 30px; font-weight: 900; color: #fff; margin-bottom: 12px;
     text-shadow: 0 2px 14px rgba(0,0,0,0.5); line-height: 1.4;
   }
-  .banner p.sub { color: rgba(255,255,255,0.85); font-size: 14px; margin-bottom: 24px; }
+  .banner p.sub { color: rgba(255,255,255,0.85); font-size: 14px; margin-bottom: 22px; }
+  .trust-badges {
+    display: flex; justify-content: center; flex-wrap: wrap; gap: 10px;
+    margin-bottom: 26px;
+  }
+  .trust-badges span {
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.28);
+    color: #fff; font-size: 12px; font-weight: 500; padding: 7px 15px;
+    border-radius: 20px; backdrop-filter: blur(3px);
+  }
   .banner button {
     background: var(--gold); color: var(--navy-950); border: none; font-weight: 700;
     padding: 13px 32px; font-size: 15px; border-radius: 4px; cursor: pointer;
@@ -244,10 +250,6 @@
     <p>낚시인만을 위한 핸드메이드 제작 전문점</p>
   </header>
 
-  <!-- 무료배송 안내 -->
-  <div class="shipping-notice">🚚 50,000원 이상 구매 시 무료배송!</div>
-  <div class="production-notice">🖐 핸드메이드 제품으로써 3일~7일의 제작기간이 필요합니다</div>
-
   <!-- 메뉴 4개 + 장바구니 -->
   <nav>
     <div class="nav-links">
@@ -261,7 +263,10 @@
 
   <!-- 상품 검색창 -->
   <div class="search-bar">
-    <input type="text" id="search-input" placeholder="🔍 상품명으로 검색해보세요" oninput="searchProducts(this.value)">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search-input" placeholder="상품명으로 검색해보세요" oninput="searchProducts(this.value)">
+    </div>
   </div>
 
   <!-- 큰 배너 -->
@@ -269,6 +274,11 @@
     <span class="eyebrow">Handmade Fishing Gear</span>
     <h2>직접 만든 핸드메이드 제품,<br>꼬미마트와 함께하세요</h2>
     <p class="sub">선상낚시를 사랑하는 앵글러가 한 땀 한 땀 제작합니다</p>
+    <div class="trust-badges">
+      <span>🚚 50,000원 이상 무료배송</span>
+      <span>🖐 100% 핸드메이드</span>
+      <span>⏱ 3~7일 제작기간</span>
+    </div>
     <button onclick="alert('이벤트 페이지 준비중입니다!')">지금 확인하기</button>
   </div>
 
