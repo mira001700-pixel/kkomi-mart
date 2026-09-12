@@ -231,8 +231,22 @@
           <button type="button" class="carousel-btn next" onclick="changeSlide('glow', 1)">›</button>
         </div>
         <h3>야광팁런에기걸이</h3>
+        <select id="glow-color" class="color-select">
+          <option value="브라운&옐로우">1) 브라운&옐로우</option>
+          <option value="브라운&그린">2) 브라운&그린</option>
+          <option value="브라운&스카이">3) 브라운&스카이</option>
+          <option value="브라운&핑크">4) 브라운&핑크</option>
+          <option value="블랙&옐로우">5) 블랙&옐로우</option>
+          <option value="블랙&그린">6) 블랙&그린</option>
+          <option value="블랙&스카이">7) 블랙&스카이</option>
+          <option value="블랙&핑크">8) 블랙&핑크</option>
+          <option value="카키&옐로우">9) 카키&옐로우</option>
+          <option value="카키&그린">10) 카키&그린</option>
+          <option value="카키&스카이">11) 카키&스카이</option>
+          <option value="카키&핑크">12) 카키&핑크</option>
+        </select>
         <p class="price">40,000원</p>
-        <button class="add-btn" onclick="addToCart('야광팁런에기걸이', 40000)">장바구니 담기</button>
+        <button class="add-btn" onclick="addToCart('야광팁런에기걸이(' + document.getElementById('glow-color').value + ')', 40000)">장바구니 담기</button>
       </div>
       <div class="card" data-category="에기걸이">
         <button class="wish-btn" data-name="쭈갑 에기걸이" onclick="toggleWish(this)">♡</button>
