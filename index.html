@@ -123,7 +123,7 @@
   .card .emoji { font-size: 48px; margin-bottom: 10px; }
   .card .thumb { width: 100%; height: 130px; object-fit: cover; border-radius: 8px; margin-bottom: 12px; }
   .media { position: relative; border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
-  .media .thumb, .media .carousel { margin-bottom: 0; }
+  .media .thumb, .media .carousel, .media .emoji { margin-bottom: 0; }
   .carousel { position: relative; }
   .carousel-btn {
     position: absolute; top: 50%; transform: translateY(-50%);
@@ -281,10 +281,13 @@
         <button class="wish-btn" data-name="야광팁런에기걸이" onclick="toggleWish(this)">♡</button>
         <span class="best">⭐ 베스트</span>
         <span class="handmade">🖐 핸드메이드</span>
-        <div class="carousel">
-          <img id="glow-img" class="thumb" src="images/product-glow-khaki.jpg" alt="야광팁런에기걸이">
-          <button type="button" class="carousel-btn prev" onclick="changeSlide('glow', -1)">‹</button>
-          <button type="button" class="carousel-btn next" onclick="changeSlide('glow', 1)">›</button>
+        <div class="media">
+          <div class="carousel">
+            <img id="glow-img" class="thumb" src="images/product-glow-khaki.jpg" alt="야광팁런에기걸이">
+            <button type="button" class="carousel-btn prev" onclick="changeSlide('glow', -1)">‹</button>
+            <button type="button" class="carousel-btn next" onclick="changeSlide('glow', 1)">›</button>
+          </div>
+          <p class="desc">야간 선상낚시에서도 잘 보이는 축광(야광) 파라코드 에기걸이입니다. 빛을 흡수해 어두운 곳에서 은은하게 빛나 장비를 쉽게 찾을 수 있습니다.</p>
         </div>
         <h3>야광팁런에기걸이</h3>
         <select id="glow-color" class="color-select">
@@ -376,7 +379,10 @@
       <div class="card" data-category="훅캡">
         <button class="wish-btn" data-name="전기도금 훅캡" onclick="toggleWish(this)">♡</button>
         <span class="popular">🔥 인기상품</span>
-        <img class="thumb" src="images/product-hookcap.jpg" alt="전기도금 훅캡">
+        <div class="media">
+          <img class="thumb" src="images/product-hookcap.jpg" alt="전기도금 훅캡">
+          <p class="desc">낚시바늘 끝을 안전하게 보호해주는 전기도금 훅캡입니다. 다양한 컬러로 제작되어 취향에 맞게 선택하실 수 있습니다.</p>
+        </div>
         <h3>전기도금 훅캡</h3>
         <select id="hookcap-color" class="color-select">
           <option value="레드">1) 레드</option>
@@ -396,7 +402,10 @@
       <div class="card" data-category="에기">
         <button class="wish-btn" data-name="수제 마이크로박스 에기" onclick="toggleWish(this)">♡</button>
         <span class="handmade">🖐 핸드메이드</span>
-        <div class="emoji">📦</div>
+        <div class="media">
+          <div class="emoji">📦</div>
+          <p class="desc">손으로 직접 도색한 수제 마이크로박스 에기입니다. 섬세한 컬러와 패턴으로 하나하나 정성껏 제작합니다.</p>
+        </div>
         <h3>수제 마이크로박스 에기</h3>
         <p class="old-price">7,500원</p>
         <p class="price">6,500원</p>
@@ -405,7 +414,10 @@
       <div class="card" data-category="에기걸이">
         <button class="wish-btn" data-name="더유닛 에기걸이" onclick="toggleWish(this)">♡</button>
         <span class="handmade">🖐 핸드메이드</span>
-        <div class="emoji">🔗</div>
+        <div class="media">
+          <div class="emoji">🔗</div>
+          <p class="desc">가볍고 실용적인 더유닛 에기걸이로, 여러 개의 에기를 깔끔하게 정리해 휴대할 수 있습니다.</p>
+        </div>
         <h3>더유닛 에기걸이</h3>
         <p class="price">15,000원</p>
         <button class="add-btn" onclick="addToCart('더유닛 에기걸이', 15000)">장바구니 담기</button>
