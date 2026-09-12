@@ -107,6 +107,11 @@
     font-size: 14px; cursor: pointer; font-family: inherit;
   }
   .add-btn:hover { opacity: 0.85; }
+  .wish-btn {
+    position: absolute; top: 10px; right: 10px; background: none; border: none;
+    font-size: 22px; line-height: 1; cursor: pointer; color: #ccc; padding: 0;
+  }
+  .wish-btn.active { color: #ff6ec7; }
 
   /* 장바구니 & 결제 모달 */
   .overlay {
@@ -202,6 +207,7 @@
     <h2>인기 상품</h2>
     <div class="product-list">
       <div class="card" data-category="에기걸이">
+        <button class="wish-btn" data-name="야광파라코드 에기걸이" onclick="toggleWish(this)">♡</button>
         <span class="handmade">🖐 핸드메이드</span>
         <div class="emoji">🌙</div>
         <h3>야광파라코드 에기걸이</h3>
@@ -209,6 +215,7 @@
         <button class="add-btn" onclick="addToCart('야광파라코드 에기걸이', 40000)">장바구니 담기</button>
       </div>
       <div class="card" data-category="에기걸이">
+        <button class="wish-btn" data-name="쭈갑 에기걸이" onclick="toggleWish(this)">♡</button>
         <span class="best">⭐ 베스트</span>
         <span class="handmade">🖐 핸드메이드</span>
         <img class="thumb" src="images/product-zzugap.jpg" alt="쭈갑 에기걸이">
@@ -228,6 +235,7 @@
         <button class="add-btn" onclick="addToCart('쭈갑 에기걸이(' + document.getElementById('zzugap-color').value + ')', 30000)">장바구니 담기</button>
       </div>
       <div class="card" data-category="에기걸이">
+        <button class="wish-btn" data-name="팁런 에기걸이" onclick="toggleWish(this)">♡</button>
         <span class="best">⭐ 베스트</span>
         <span class="handmade">🖐 핸드메이드</span>
         <img class="thumb" src="images/product-necklace.jpg" alt="팁런 에기걸이">
@@ -251,6 +259,7 @@
         <button class="add-btn" onclick="addTiplunToCart()">장바구니 담기</button>
       </div>
       <div class="card" data-category="에기걸이">
+        <button class="wish-btn" data-name="에깅낚시목걸이&로드스트랩세트" onclick="toggleWish(this)">♡</button>
         <span class="handmade">🖐 핸드메이드</span>
         <span class="popular">🔥 인기상품</span>
         <div class="carousel">
@@ -269,6 +278,7 @@
         <button class="add-btn" onclick="addToCart('에깅낚시목걸이&로드스트랩세트(' + document.getElementById('necklace-color').value + ')', 15000)">장바구니 담기</button>
       </div>
       <div class="card" data-category="훅캡">
+        <button class="wish-btn" data-name="전기도금 훅캡" onclick="toggleWish(this)">♡</button>
         <span class="popular">🔥 인기상품</span>
         <img class="thumb" src="images/product-hookcap.jpg" alt="전기도금 훅캡">
         <h3>전기도금 훅캡</h3>
@@ -288,6 +298,7 @@
         <button class="add-btn" onclick="addToCart('전기도금 훅캡(' + document.getElementById('hookcap-color').value + ')', 1000)">장바구니 담기</button>
       </div>
       <div class="card" data-category="에기">
+        <button class="wish-btn" data-name="수제 마이크로박스 에기" onclick="toggleWish(this)">♡</button>
         <span class="handmade">🖐 핸드메이드</span>
         <div class="emoji">📦</div>
         <h3>수제 마이크로박스 에기</h3>
@@ -296,6 +307,7 @@
         <button class="add-btn" onclick="addToCart('수제 마이크로박스 에기', 6500)">장바구니 담기</button>
       </div>
       <div class="card" data-category="에기걸이">
+        <button class="wish-btn" data-name="더유닛 에기걸이" onclick="toggleWish(this)">♡</button>
         <span class="handmade">🖐 핸드메이드</span>
         <div class="emoji">🔗</div>
         <h3>더유닛 에기걸이</h3>
@@ -483,6 +495,32 @@
       e.target.reset();
     }
 
+    function toggleWish(btn) {
+      const name = btn.dataset.name;
+      btn.classList.toggle('active');
+      const liked = btn.classList.contains('active');
+      btn.textContent = liked ? '♥' : '♡';
+
+      let wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+      if (liked) {
+        if (!wishlist.includes(name)) wishlist.push(name);
+      } else {
+        wishlist = wishlist.filter(n => n !== name);
+      }
+      localStorage.setItem('wishlist', JSON.stringify(wishlist));
+    }
+
+    function initWishlist() {
+      const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+      document.querySelectorAll('.wish-btn').forEach(btn => {
+        if (wishlist.includes(btn.dataset.name)) {
+          btn.classList.add('active');
+          btn.textContent = '♥';
+        }
+      });
+    }
+
+    initWishlist();
     updateCartUI();
   </script>
 
