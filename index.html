@@ -4,184 +4,227 @@
 <meta charset="UTF-8">
 <title>꼬미마트</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <style>
+  :root {
+    --navy-950: #071b2c;
+    --navy-900: #0b2740;
+    --navy-800: #123a5c;
+    --navy-700: #1a4d78;
+    --teal: #0f7a76;
+    --gold: #c9a24a;
+    --gold-light: #e4c884;
+    --bg: #f3f5f7;
+    --card-bg: #ffffff;
+    --text: #1b2430;
+    --text-muted: #6b7684;
+    --border: #e3e7eb;
+    --price: #b8342f;
+  }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Gowun Dodum', sans-serif; color: #333; background: #f5faff; }
+  body { font-family: 'Noto Sans KR', sans-serif; color: var(--text); background: var(--bg); }
 
   /* 상단 */
   header {
-    background: linear-gradient(90deg, #00c9a7, #5b86e5, #a86ee6, #ff6ec7);
-    color: white; padding: 20px; text-align: center;
+    background: linear-gradient(135deg, var(--navy-950), var(--navy-800));
+    color: #fff; padding: 30px 20px 26px; text-align: center;
   }
-  header h1 { font-size: 28px; }
-  header p { margin-top: 5px; font-size: 14px; }
+  header h1 {
+    font-size: 30px; font-weight: 900; letter-spacing: 0.5px;
+  }
+  header p {
+    margin-top: 8px; font-size: 13px; color: var(--gold-light);
+    letter-spacing: 1px; font-weight: 500;
+  }
 
   /* 무료배송 & 제작기간 안내 */
-  .shipping-notice {
-    background: #ffe680; color: #4b3f8c; text-align: center;
-    padding: 8px; font-size: 14px; font-weight: bold;
+  .shipping-notice, .production-notice {
+    background: var(--navy-900); color: #fff; text-align: center;
+    padding: 9px; font-size: 13px; font-weight: 500;
+    border-top: 1px solid rgba(255,255,255,0.08);
   }
-  .production-notice {
-    background: #fff0f6; color: #4b3f8c; text-align: center;
-    padding: 8px; font-size: 13px;
-  }
+  .shipping-notice { font-weight: 700; color: var(--gold-light); }
 
   /* 메뉴 */
   nav {
-    background: linear-gradient(90deg, #5b86e5, #a86ee6);
+    background: var(--navy-900);
     display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 2px solid var(--gold);
   }
   .nav-links { display: flex; }
-  nav a { color: white; text-decoration: none; padding: 14px 20px; font-size: 15px; cursor: pointer; }
-  nav a:hover { background: rgba(255,255,255,0.2); }
-  nav a.active { background: rgba(255,255,255,0.3); font-weight: bold; }
-  .cart-btn {
-    background: none; border: none; color: white; font-size: 15px;
-    cursor: pointer; padding: 14px 20px; font-family: inherit;
+  nav a {
+    color: rgba(255,255,255,0.82); text-decoration: none; padding: 15px 20px;
+    font-size: 14px; font-weight: 600; cursor: pointer; letter-spacing: 0.3px;
+    border-bottom: 3px solid transparent;
   }
-  .cart-btn:hover { background: rgba(255,255,255,0.2); }
+  nav a:hover { color: #fff; background: rgba(255,255,255,0.06); }
+  nav a.active { color: var(--gold-light); border-bottom-color: var(--gold); }
+  .cart-btn {
+    background: none; border: none; color: rgba(255,255,255,0.9); font-size: 14px;
+    font-weight: 600; cursor: pointer; padding: 15px 20px; font-family: inherit;
+  }
+  .cart-btn:hover { background: rgba(255,255,255,0.06); color: #fff; }
   #cart-count {
-    background: #ff6ec7; border-radius: 50%; padding: 1px 7px;
-    font-size: 11px; margin-left: 4px;
+    background: var(--gold); color: var(--navy-950); border-radius: 50%; padding: 1px 7px;
+    font-size: 11px; font-weight: 700; margin-left: 4px;
   }
 
   /* 상품 검색창 */
   .search-bar {
-    background: #f5faff; padding: 14px 20px; text-align: center;
-    border-bottom: 1px solid #d8c7f0;
+    background: var(--card-bg); padding: 16px 20px; text-align: center;
+    border-bottom: 1px solid var(--border);
   }
   .search-bar input {
-    width: 100%; max-width: 400px; padding: 10px 14px; border-radius: 20px;
-    border: 1px solid #ccc; font-family: inherit; font-size: 14px;
+    width: 100%; max-width: 420px; padding: 11px 18px; border-radius: 24px;
+    border: 1px solid var(--border); font-family: inherit; font-size: 14px;
+    background: var(--bg);
   }
-  .search-bar input:focus { outline: none; border-color: #5b86e5; }
+  .search-bar input:focus { outline: none; border-color: var(--navy-700); background: #fff; }
 
   /* 배너 - 바다 사진 */
   .banner {
-    background: linear-gradient(rgba(15,32,39,0.45), rgba(15,32,39,0.45)), url('images/banner-sea.jpg');
+    background: linear-gradient(rgba(7,27,44,0.55), rgba(7,27,44,0.72)), url('images/banner-sea.jpg');
     background-size: cover;
     background-position: center;
-    text-align: center; padding: 80px 20px;
+    text-align: center; padding: 90px 20px;
   }
-  .banner h2 { font-size: 26px; color: #fff; margin-bottom: 15px; text-shadow: 0 2px 12px rgba(0,0,0,0.5); }
+  .banner .eyebrow {
+    display: inline-block; color: var(--gold-light); font-size: 12px;
+    letter-spacing: 3px; font-weight: 700; margin-bottom: 14px; text-transform: uppercase;
+  }
+  .banner h2 {
+    font-size: 30px; font-weight: 900; color: #fff; margin-bottom: 12px;
+    text-shadow: 0 2px 14px rgba(0,0,0,0.5); line-height: 1.4;
+  }
+  .banner p.sub { color: rgba(255,255,255,0.85); font-size: 14px; margin-bottom: 24px; }
   .banner button {
-    background: linear-gradient(90deg, #00c9a7, #5b86e5, #a86ee6);
-    color: white; border: none;
-    padding: 12px 28px; font-size: 16px; border-radius: 6px; cursor: pointer;
+    background: var(--gold); color: var(--navy-950); border: none; font-weight: 700;
+    padding: 13px 32px; font-size: 15px; border-radius: 4px; cursor: pointer;
+    letter-spacing: 0.5px;
   }
-  .banner button:hover { opacity: 0.85; }
+  .banner button:hover { background: var(--gold-light); }
 
   /* 상품 */
-  .products { padding: 40px 20px; text-align: center; }
-  .products h2 { margin-bottom: 25px; color: #4b3f8c; }
-  .product-list { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-  .card {
-    background: white; border: 1px solid #d8c7f0; border-radius: 10px;
-    width: 200px; padding: 20px; position: relative;
+  .products { padding: 50px 20px; text-align: center; }
+  .products .eyebrow {
+    display: block; color: var(--teal); font-size: 12px; font-weight: 700;
+    letter-spacing: 3px; margin-bottom: 8px; text-transform: uppercase;
   }
-  .card .emoji { font-size: 50px; margin-bottom: 10px; }
-  .card .thumb { width: 100%; height: 130px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; }
+  .products h2 { margin-bottom: 34px; color: var(--navy-950); font-size: 24px; font-weight: 900; }
+  .product-list { display: flex; justify-content: center; gap: 22px; flex-wrap: wrap; }
+  .card {
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px;
+    width: 210px; padding: 20px; position: relative;
+    box-shadow: 0 1px 3px rgba(11,39,64,0.06);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .card:hover { box-shadow: 0 10px 24px rgba(11,39,64,0.12); transform: translateY(-3px); }
+  .card .emoji { font-size: 48px; margin-bottom: 10px; }
+  .card .thumb { width: 100%; height: 130px; object-fit: cover; border-radius: 8px; margin-bottom: 12px; }
   .carousel { position: relative; }
   .carousel-btn {
     position: absolute; top: 50%; transform: translateY(-50%);
-    background: rgba(0,0,0,0.45); color: white; border: none;
+    background: rgba(7,27,44,0.55); color: #fff; border: none;
     width: 26px; height: 26px; border-radius: 50%; cursor: pointer;
-    font-size: 16px; line-height: 1; margin-top: -5px;
+    font-size: 16px; line-height: 1; margin-top: -6px;
   }
   .carousel-btn.prev { left: 6px; }
   .carousel-btn.next { right: 6px; }
-  .carousel-btn:hover { background: rgba(0,0,0,0.65); }
-  .card h3 { font-size: 16px; margin-bottom: 8px; }
-  .card .desc { font-size: 12px; color: #777; line-height: 1.5; margin-bottom: 10px; }
+  .carousel-btn:hover { background: var(--gold); color: var(--navy-950); }
+  .card h3 { font-size: 15px; margin-bottom: 8px; font-weight: 700; color: var(--text); }
+  .card .desc { font-size: 12px; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px; }
   .color-select {
-    width: 100%; padding: 6px; margin-bottom: 8px; border-radius: 6px;
-    border: 1px solid #ccc; font-family: inherit; font-size: 13px;
+    width: 100%; padding: 7px 8px; margin-bottom: 8px; border-radius: 6px;
+    border: 1px solid var(--border); font-family: inherit; font-size: 13px;
+    background: var(--bg); color: var(--text);
   }
-  .handmade {
-    display: inline-block; background: #ff6ec7; color: white;
-    font-size: 12px; padding: 3px 10px; border-radius: 12px; margin-bottom: 8px;
+  .color-select:focus { outline: none; border-color: var(--navy-700); }
+  .handmade, .best, .popular {
+    display: inline-block; font-size: 11px; font-weight: 700;
+    padding: 3px 9px; border-radius: 3px; margin: 0 4px 8px 0;
+    letter-spacing: 0.3px;
   }
-  .best {
-    display: inline-block; background: #e63946; color: white;
-    font-size: 12px; padding: 3px 10px; border-radius: 12px; margin-bottom: 8px;
-  }
-  .popular {
-    display: inline-block; background: #5b86e5; color: white;
-    font-size: 12px; padding: 3px 10px; border-radius: 12px; margin-bottom: 8px;
-  }
-  .old-price { color: #999; text-decoration: line-through; font-size: 13px; }
-  .price { color: #e63946; font-weight: bold; font-size: 18px; }
+  .handmade { background: rgba(15,122,118,0.12); color: var(--teal); }
+  .best { background: var(--navy-950); color: var(--gold-light); }
+  .popular { background: rgba(201,162,74,0.15); color: #96712a; }
+  .old-price { color: #a3aab3; text-decoration: line-through; font-size: 12px; }
+  .price { color: var(--price); font-weight: 800; font-size: 19px; }
   .add-btn {
-    margin-top: 10px; width: 100%; padding: 8px; border: none; border-radius: 6px;
-    background: linear-gradient(90deg, #5b86e5, #a86ee6); color: white;
-    font-size: 14px; cursor: pointer; font-family: inherit;
+    margin-top: 12px; width: 100%; padding: 10px; border: none; border-radius: 6px;
+    background: var(--navy-950); color: #fff;
+    font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit;
+    transition: background 0.15s ease;
   }
-  .add-btn:hover { opacity: 0.85; }
+  .add-btn:hover { background: var(--navy-700); }
   .wish-btn {
-    position: absolute; top: 10px; right: 10px; background: none; border: none;
-    font-size: 22px; line-height: 1; cursor: pointer; color: #ccc; padding: 0;
+    position: absolute; top: 12px; right: 12px; background: none; border: none;
+    font-size: 21px; line-height: 1; cursor: pointer; color: #c3cad2; padding: 0;
+    z-index: 2;
   }
-  .wish-btn.active { color: #ff6ec7; }
+  .wish-btn.active { color: #c0392b; }
 
   /* 장바구니 & 결제 모달 */
   .overlay {
-    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+    display: none; position: fixed; inset: 0; background: rgba(7,27,44,0.55);
     z-index: 100; align-items: center; justify-content: center; padding: 20px;
   }
   .overlay.show { display: flex; }
   .modal {
-    background: white; border-radius: 12px; padding: 24px;
+    background: #fff; border-radius: 12px; padding: 26px;
     width: 100%; max-width: 420px; max-height: 85vh; overflow-y: auto;
   }
-  .modal h2 { color: #4b3f8c; margin-bottom: 16px; }
+  .modal h2 { color: var(--navy-950); margin-bottom: 18px; font-size: 19px; }
   .cart-item {
     display: flex; align-items: center; justify-content: space-between; gap: 8px;
-    padding: 10px 0; border-bottom: 1px solid #eee; font-size: 14px;
+    padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px;
   }
   .cart-item-name { flex: 1; text-align: left; }
   .qty-control { display: flex; align-items: center; gap: 6px; }
   .qty-control button {
-    width: 24px; height: 24px; border: 1px solid #ccc; background: #f5faff;
+    width: 24px; height: 24px; border: 1px solid var(--border); background: var(--bg);
     border-radius: 4px; cursor: pointer;
   }
-  .cart-item-price { width: 85px; text-align: right; color: #e63946; font-weight: bold; }
-  .remove-btn { background: none; border: none; color: #999; cursor: pointer; font-size: 15px; }
-  .empty { color: #999; padding: 20px 0; text-align: center; }
-  .cart-total { text-align: right; margin-top: 14px; font-weight: bold; font-size: 16px; color: #4b3f8c; }
+  .cart-item-price { width: 85px; text-align: right; color: var(--price); font-weight: 700; }
+  .remove-btn { background: none; border: none; color: #a3aab3; cursor: pointer; font-size: 15px; }
+  .empty { color: var(--text-muted); padding: 20px 0; text-align: center; }
+  .cart-total { text-align: right; margin-top: 14px; font-weight: 800; font-size: 16px; color: var(--navy-950); }
   .modal-actions { display: flex; gap: 10px; margin-top: 18px; }
   .modal-actions button {
-    flex: 1; padding: 10px; border: none; border-radius: 6px; cursor: pointer;
-    font-size: 14px; font-family: inherit;
+    flex: 1; padding: 11px; border: none; border-radius: 6px; cursor: pointer;
+    font-size: 14px; font-weight: 700; font-family: inherit;
   }
-  .modal-actions button.secondary { background: #eee; color: #333; }
-  .modal-actions button.primary {
-    background: linear-gradient(90deg, #00c9a7, #5b86e5, #a86ee6); color: white;
-  }
-  #checkout-form label { display: block; margin-bottom: 10px; font-size: 13px; text-align: left; color: #555; }
+  .modal-actions button.secondary { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
+  .modal-actions button.primary { background: var(--navy-950); color: #fff; }
+  .modal-actions button.primary:hover { background: var(--navy-700); }
+  #checkout-form label { display: block; margin-bottom: 10px; font-size: 13px; text-align: left; color: var(--text-muted); font-weight: 500; }
   #checkout-form input, #checkout-form select {
-    width: 100%; padding: 8px; margin-top: 4px; border: 1px solid #ccc;
+    width: 100%; padding: 9px 10px; margin-top: 4px; border: 1px solid var(--border);
     border-radius: 6px; font-family: inherit; font-size: 14px;
   }
+  #checkout-form input:focus, #checkout-form select:focus { outline: none; border-color: var(--navy-700); }
   .summary-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px; }
   .summary-row.total {
-    border-top: 1px solid #ddd; margin-top: 8px; padding-top: 10px;
-    font-weight: bold; color: #e63946; font-size: 16px;
+    border-top: 1px solid var(--border); margin-top: 8px; padding-top: 10px;
+    font-weight: 800; color: var(--price); font-size: 16px;
   }
   /* 주의사항 */
   .caution {
-    background: #fff8e1; padding: 24px 20px; text-align: center;
-    border-top: 1px solid #f0e0b0; border-bottom: 1px solid #f0e0b0;
+    background: #eef1f4; padding: 30px 20px; text-align: center;
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
   }
-  .caution h2 { font-size: 18px; color: #4b3f8c; margin-bottom: 12px; }
+  .caution h2 { font-size: 15px; color: var(--navy-950); margin-bottom: 14px; letter-spacing: 1px; font-weight: 800; }
   .caution ul { list-style: none; display: inline-block; text-align: left; }
-  .caution li { font-size: 13px; color: #555; margin-bottom: 6px; }
+  .caution li { font-size: 13px; color: var(--text-muted); margin-bottom: 7px; }
 
   /* 연락처 */
   footer {
-    background: linear-gradient(90deg, #5b86e5, #a86ee6, #ff6ec7);
-    color: white; text-align: center; padding: 20px; font-size: 14px;
+    background: var(--navy-950);
+    color: rgba(255,255,255,0.75); text-align: center; padding: 30px 20px 26px; font-size: 13px;
+    line-height: 1.9;
   }
+  footer p:first-child { color: #fff; font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+  footer .divider { color: var(--gold); margin: 10px 0; font-size: 11px; letter-spacing: 4px; }
 </style>
 </head>
 <body>
@@ -214,16 +257,20 @@
 
   <!-- 큰 배너 -->
   <div class="banner">
-    <h2>🖐 직접 만든 핸드메이드 제품, 꼬미마트와 함께하세요</h2>
+    <span class="eyebrow">Handmade Fishing Gear</span>
+    <h2>직접 만든 핸드메이드 제품,<br>꼬미마트와 함께하세요</h2>
+    <p class="sub">선상낚시를 사랑하는 앵글러가 한 땀 한 땀 제작합니다</p>
     <button onclick="alert('이벤트 페이지 준비중입니다!')">지금 확인하기</button>
   </div>
 
   <!-- 상품 카드 6개 -->
   <div class="products">
+    <span class="eyebrow">Best Sellers</span>
     <h2>인기 상품</h2>
     <div class="product-list">
       <div class="card" data-category="에기걸이">
         <button class="wish-btn" data-name="야광팁런에기걸이" onclick="toggleWish(this)">♡</button>
+        <span class="best">⭐ 베스트</span>
         <span class="handmade">🖐 핸드메이드</span>
         <div class="carousel">
           <img id="glow-img" class="thumb" src="images/product-glow-khaki.jpg" alt="야광팁런에기걸이">
@@ -366,6 +413,7 @@
   <footer>
     <p>꼬미마트 고객센터</p>
     <p>전화: 010-3988-1106</p>
+    <div class="divider">• • •</div>
     <p>사업자등록번호: 894-25-02008</p>
     <p>소재지: 인천광역시 동구 방축로37번길 30</p>
     <p>🖐 모든 제품은 직접 만든 핸드메이드 제품입니다</p>
