@@ -278,6 +278,28 @@
     <h2>인기 상품</h2>
     <div class="product-list">
       <div class="card" data-category="에기걸이">
+        <button class="wish-btn" data-name="쭈갑 에기걸이" onclick="toggleWish(this)">♡</button>
+        <span class="best">⭐ 베스트</span>
+        <span class="handmade">🖐 핸드메이드</span>
+        <div class="media">
+          <img class="thumb" src="images/product-zzugap.jpg" alt="쭈갑 에기걸이">
+          <p class="desc">두족류에 필요한 에기걸이를 파라코드를 이용해 손수 직접 꼬아 만드는 핸드메이드 제품입니다. 운영자 역시 낚시를 취미로 둔 앵글러로서 사용자의 마음을 담았습니다.<br>사이즈: 약 40cm</p>
+        </div>
+        <h3>쭈갑 에기걸이</h3>
+        <select id="zzugap-color" class="color-select">
+          <option value="블랙&레인보우">1) 블랙&레인보우</option>
+          <option value="블랙&네이비">2) 블랙&네이비</option>
+          <option value="카키&오렌지">3) 카키&오렌지</option>
+          <option value="블랙&레드">4) 블랙&레드</option>
+          <option value="블랙&그린">5) 블랙&그린</option>
+          <option value="블랙&퍼플">6) 블랙&퍼플</option>
+          <option value="블랙&핑크">7) 블랙&핑크</option>
+          <option value="블랙&옐로우">8) 블랙&옐로우</option>
+        </select>
+        <p class="price">30,000원</p>
+        <button class="add-btn" onclick="addToCart('쭈갑 에기걸이(' + document.getElementById('zzugap-color').value + ')', 30000)">장바구니 담기</button>
+      </div>
+      <div class="card" data-category="에기걸이">
         <button class="wish-btn" data-name="야광팁런에기걸이" onclick="toggleWish(this)">♡</button>
         <span class="best">⭐ 베스트</span>
         <span class="handmade">🖐 핸드메이드</span>
@@ -306,28 +328,6 @@
         </select>
         <p class="price">40,000원</p>
         <button class="add-btn" onclick="addToCart('야광팁런에기걸이(' + document.getElementById('glow-color').value + ')', 40000)">장바구니 담기</button>
-      </div>
-      <div class="card" data-category="에기걸이">
-        <button class="wish-btn" data-name="쭈갑 에기걸이" onclick="toggleWish(this)">♡</button>
-        <span class="best">⭐ 베스트</span>
-        <span class="handmade">🖐 핸드메이드</span>
-        <div class="media">
-          <img class="thumb" src="images/product-zzugap.jpg" alt="쭈갑 에기걸이">
-          <p class="desc">두족류에 필요한 에기걸이를 파라코드를 이용해 손수 직접 꼬아 만드는 핸드메이드 제품입니다. 운영자 역시 낚시를 취미로 둔 앵글러로서 사용자의 마음을 담았습니다.<br>사이즈: 약 40cm</p>
-        </div>
-        <h3>쭈갑 에기걸이</h3>
-        <select id="zzugap-color" class="color-select">
-          <option value="블랙&레인보우">1) 블랙&레인보우</option>
-          <option value="블랙&네이비">2) 블랙&네이비</option>
-          <option value="카키&오렌지">3) 카키&오렌지</option>
-          <option value="블랙&레드">4) 블랙&레드</option>
-          <option value="블랙&그린">5) 블랙&그린</option>
-          <option value="블랙&퍼플">6) 블랙&퍼플</option>
-          <option value="블랙&핑크">7) 블랙&핑크</option>
-          <option value="블랙&옐로우">8) 블랙&옐로우</option>
-        </select>
-        <p class="price">30,000원</p>
-        <button class="add-btn" onclick="addToCart('쭈갑 에기걸이(' + document.getElementById('zzugap-color').value + ')', 30000)">장바구니 담기</button>
       </div>
       <div class="card" data-category="에기걸이">
         <button class="wish-btn" data-name="팁런 에기걸이" onclick="toggleWish(this)">♡</button>
