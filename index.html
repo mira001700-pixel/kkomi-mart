@@ -46,6 +46,17 @@
     font-size: 11px; margin-left: 4px;
   }
 
+  /* 상품 검색창 */
+  .search-bar {
+    background: #f5faff; padding: 14px 20px; text-align: center;
+    border-bottom: 1px solid #d8c7f0;
+  }
+  .search-bar input {
+    width: 100%; max-width: 400px; padding: 10px 14px; border-radius: 20px;
+    border: 1px solid #ccc; font-family: inherit; font-size: 14px;
+  }
+  .search-bar input:focus { outline: none; border-color: #5b86e5; }
+
   /* 배너 - 바다 사진 */
   .banner {
     background: linear-gradient(rgba(15,32,39,0.45), rgba(15,32,39,0.45)), url('images/banner-sea.jpg');
@@ -195,6 +206,11 @@
     </div>
     <button class="cart-btn" onclick="openCart()">🛒 장바구니<span id="cart-count">0</span></button>
   </nav>
+
+  <!-- 상품 검색창 -->
+  <div class="search-bar">
+    <input type="text" id="search-input" placeholder="🔍 상품명으로 검색해보세요" oninput="searchProducts(this.value)">
+  </div>
 
   <!-- 큰 배너 -->
   <div class="banner">
@@ -381,13 +397,27 @@
   </div>
 
   <script>
+    let currentCategory = '전체상품';
+    let currentSearch = '';
+
     function filterProducts(category, linkEl) {
+      currentCategory = category;
       document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
       linkEl.classList.add('active');
+      applyFilters();
+    }
 
+    function searchProducts(term) {
+      currentSearch = term.trim().toLowerCase();
+      applyFilters();
+    }
+
+    function applyFilters() {
       document.querySelectorAll('.product-list .card').forEach(card => {
-        const match = category === '전체상품' || card.dataset.category === category;
-        card.style.display = match ? '' : 'none';
+        const categoryMatch = currentCategory === '전체상품' || card.dataset.category === currentCategory;
+        const name = card.querySelector('h3').textContent.toLowerCase();
+        const searchMatch = !currentSearch || name.includes(currentSearch);
+        card.style.display = (categoryMatch && searchMatch) ? '' : 'none';
       });
     }
 
