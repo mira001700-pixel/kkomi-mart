@@ -5,7 +5,7 @@
 <title>꼬미마트</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&family=Noto+Serif+KR:wght@500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root {
     --navy-950: #071b2c;
@@ -13,14 +13,14 @@
     --navy-800: #123a5c;
     --navy-700: #1a4d78;
     --teal: #0f7a76;
-    --gold: #c9a24a;
-    --gold-light: #e4c884;
-    --bg: #f3f5f7;
+    --gold: #ff6a2b;
+    --gold-light: #ffb088;
+    --bg: #eef1f4;
     --card-bg: #ffffff;
     --text: #1b2430;
     --text-muted: #6b7684;
     --border: #e3e7eb;
-    --price: #8a2530;
+    --price: #d63447;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: 'Noto Sans KR', sans-serif; color: var(--text); background: var(--bg); }
@@ -31,16 +31,15 @@
     color: #fff; padding: 30px 20px 26px; text-align: center;
   }
   header h1 {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 30px; font-weight: 700; letter-spacing: 1px;
+    font-size: 28px; font-weight: 900; letter-spacing: -0.3px;
   }
   header p {
-    margin-top: 10px; font-size: 12px; color: var(--gold-light);
-    letter-spacing: 2px; font-weight: 500;
+    margin-top: 10px; font-size: 12px; color: rgba(255,255,255,0.65);
+    letter-spacing: 1px; font-weight: 500;
   }
   header .rule {
-    width: 40px; height: 1px; background: var(--gold);
-    margin: 14px auto 0; opacity: 0.7;
+    width: 36px; height: 3px; background: var(--gold); border-radius: 2px;
+    margin: 14px auto 0;
   }
 
   /* 메뉴 */
@@ -96,9 +95,8 @@
     letter-spacing: 3px; font-weight: 700; margin-bottom: 14px; text-transform: uppercase;
   }
   .banner h2 {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 30px; font-weight: 700; color: #fff; margin-bottom: 14px;
-    text-shadow: 0 2px 14px rgba(0,0,0,0.5); line-height: 1.5;
+    font-size: 32px; font-weight: 900; color: #fff; margin-bottom: 14px;
+    text-shadow: 0 2px 14px rgba(0,0,0,0.5); line-height: 1.45; letter-spacing: -0.3px;
   }
   .banner p.sub { color: rgba(255,255,255,0.85); font-size: 14px; margin-bottom: 22px; }
   .trust-badges {
@@ -118,48 +116,70 @@
   .banner button:hover { background: var(--gold-light); }
 
   /* 상품 */
-  .products { padding: 50px 20px; text-align: center; }
+  .products {
+    padding: 56px 20px 64px; text-align: center;
+    background: var(--card-bg);
+    box-shadow: 0 -8px 20px -12px rgba(11,39,64,0.08) inset;
+  }
   .products .eyebrow {
-    display: block; color: var(--teal); font-size: 12px; font-weight: 700;
-    letter-spacing: 3px; margin-bottom: 8px; text-transform: uppercase;
+    display: block; color: var(--teal); font-size: 12px; font-weight: 800;
+    letter-spacing: 3px; margin-bottom: 10px; text-transform: uppercase;
   }
   .products h2 {
-    font-family: 'Noto Serif KR', serif;
-    margin-bottom: 34px; color: var(--navy-950); font-size: 24px; font-weight: 700;
+    margin-bottom: 10px; color: var(--navy-950); font-size: 26px; font-weight: 900;
+    letter-spacing: -0.3px;
   }
-  .product-list { display: flex; justify-content: center; gap: 22px; flex-wrap: wrap; }
+  .products .bar {
+    width: 44px; height: 4px; background: var(--gold); border-radius: 2px;
+    margin: 0 auto 36px;
+  }
+  .product-list {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+    gap: 22px; max-width: 1100px; margin: 0 auto;
+  }
   .card {
     background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px;
-    width: 210px; padding: 20px; position: relative;
+    padding: 18px; position: relative;
+    display: flex; flex-direction: column;
     box-shadow: 0 1px 3px rgba(11,39,64,0.06);
     transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
   }
   .card:hover {
-    box-shadow: 0 14px 28px rgba(11,39,64,0.13);
-    transform: translateY(-3px);
-    border-color: var(--gold);
+    box-shadow: 0 14px 30px rgba(11,39,64,0.14);
+    transform: translateY(-4px);
+    border-color: var(--navy-800);
   }
-  .card .emoji { font-size: 48px; margin-bottom: 10px; }
-  .card .thumb { width: 100%; height: 130px; object-fit: cover; border-radius: 8px; margin-bottom: 12px; }
-  .media { position: relative; border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
-  .media .thumb, .media .carousel, .media .emoji { margin-bottom: 0; }
-  .carousel { position: relative; }
+  .badge-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; min-height: 20px; }
+  .media {
+    position: relative; width: 100%; height: 156px; border-radius: 8px; overflow: hidden;
+    margin-bottom: 14px; background: linear-gradient(135deg, #e9edf1, #dde3e9);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .media .emoji { font-size: 56px; margin: 0; line-height: 1; }
+  .media .thumb {
+    width: 100%; height: 100%; object-fit: cover; margin: 0; border-radius: 0;
+    transition: transform 0.35s ease;
+  }
+  .media .carousel { position: relative; width: 100%; height: 100%; }
+  .media .carousel .thumb { width: 100%; height: 100%; }
+  .card:hover .media .thumb { transform: scale(1.06); }
   .carousel-btn {
     position: absolute; top: 50%; transform: translateY(-50%);
     background: rgba(7,27,44,0.55); color: #fff; border: none;
     width: 26px; height: 26px; border-radius: 50%; cursor: pointer;
-    font-size: 16px; line-height: 1; margin-top: -6px;
+    font-size: 16px; line-height: 1; margin-top: -6px; z-index: 2;
   }
   .carousel-btn.prev { left: 6px; }
   .carousel-btn.next { right: 6px; }
-  .carousel-btn:hover { background: var(--gold); color: var(--navy-950); }
+  .carousel-btn:hover { background: var(--gold); color: #fff; }
   .card h3 { font-size: 15px; margin-bottom: 8px; font-weight: 700; color: var(--text); }
   .card .desc {
     position: absolute; inset: 0; margin: 0; padding: 14px;
-    background: rgba(7,27,44,0.86); color: #fff;
+    background: rgba(7,27,44,0.88); color: #fff;
     display: flex; align-items: center; text-align: left;
     font-size: 12px; line-height: 1.6; font-weight: 400;
     opacity: 0; transition: opacity 0.25s ease; pointer-events: none;
+    z-index: 1;
   }
   .media:hover .desc { opacity: 1; }
   .color-select {
@@ -168,28 +188,30 @@
     background: var(--bg); color: var(--text);
   }
   .color-select:focus { outline: none; border-color: var(--navy-700); }
-  .handmade, .best, .popular {
-    display: inline-block; font-size: 10px; font-weight: 700;
-    padding: 3px 8px; border-radius: 2px; margin: 0 4px 8px 0;
-    letter-spacing: 0.6px; text-transform: uppercase;
-    background: transparent; border: 1px solid currentColor;
+  .handmade, .best, .popular, .discount {
+    display: inline-block; font-size: 10px; font-weight: 800;
+    padding: 4px 8px; border-radius: 3px;
+    letter-spacing: 0.4px; color: #fff;
   }
-  .handmade { color: var(--teal); }
-  .best { color: var(--gold); border-color: var(--gold); }
-  .popular { color: var(--navy-700); }
+  .handmade { background: var(--teal); }
+  .best { background: var(--gold); }
+  .popular { background: var(--navy-800); }
+  .discount { background: var(--price); }
+  .price-row { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
   .old-price { color: #a3aab3; text-decoration: line-through; font-size: 12px; }
   .price {
-    color: var(--price); font-weight: 700; font-size: 19px;
-    letter-spacing: 0.3px;
+    color: var(--price); font-weight: 800; font-size: 20px;
+    letter-spacing: -0.2px;
   }
   .add-btn {
-    margin-top: 12px; width: 100%; padding: 11px; border: none; border-radius: 4px;
-    background: var(--navy-950); color: #fff;
-    font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit;
-    letter-spacing: 1px; text-transform: uppercase;
-    transition: background 0.15s ease;
+    width: 100%; margin-top: auto; padding: 12px; border: none; border-radius: 6px;
+    background: var(--gold); color: #fff;
+    font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit;
+    letter-spacing: 0.5px;
+    transition: background 0.15s ease, transform 0.1s ease;
   }
-  .add-btn:hover { background: var(--navy-700); }
+  .add-btn:hover { background: #e85a1e; }
+  .add-btn:active { transform: scale(0.98); }
   .wish-btn {
     position: absolute; top: 12px; right: 12px; background: none; border: none;
     font-size: 21px; line-height: 1; cursor: pointer; color: #c3cad2; padding: 0;
@@ -243,10 +265,9 @@
   }
   /* 주의사항 */
   .caution {
-    background: #eef1f4; padding: 30px 20px; text-align: center;
-    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    background: rgba(11,39,64,0.05); padding: 32px 20px; text-align: center;
   }
-  .caution h2 { font-size: 15px; color: var(--navy-950); margin-bottom: 14px; letter-spacing: 1px; font-weight: 800; }
+  .caution h2 { font-size: 13px; color: var(--navy-950); margin-bottom: 16px; letter-spacing: 2px; font-weight: 800; text-transform: uppercase; }
   .caution ul { list-style: none; display: inline-block; text-align: left; }
   .caution li { font-size: 13px; color: var(--text-muted); margin-bottom: 7px; }
 
@@ -305,11 +326,14 @@
   <div class="products">
     <span class="eyebrow">Best Sellers</span>
     <h2>인기 상품</h2>
+    <div class="bar"></div>
     <div class="product-list">
       <div class="card" data-category="에기걸이">
         <button class="wish-btn" data-name="쭈갑 에기걸이" onclick="toggleWish(this)">♡</button>
-        <span class="best">⭐ 베스트</span>
-        <span class="handmade">🖐 핸드메이드</span>
+        <div class="badge-row">
+          <span class="best">BEST</span>
+          <span class="handmade">HANDMADE</span>
+        </div>
         <div class="media">
           <img class="thumb" src="images/product-zzugap.jpg" alt="쭈갑 에기걸이">
           <p class="desc">두족류에 필요한 에기걸이를 파라코드를 이용해 손수 직접 꼬아 만드는 핸드메이드 제품입니다. 운영자 역시 낚시를 취미로 둔 앵글러로서 사용자의 마음을 담았습니다.<br>사이즈: 약 40cm</p>
@@ -330,8 +354,10 @@
       </div>
       <div class="card" data-category="에기걸이">
         <button class="wish-btn" data-name="야광팁런에기걸이" onclick="toggleWish(this)">♡</button>
-        <span class="best">⭐ 베스트</span>
-        <span class="handmade">🖐 핸드메이드</span>
+        <div class="badge-row">
+          <span class="best">BEST</span>
+          <span class="handmade">HANDMADE</span>
+        </div>
         <div class="media">
           <div class="carousel">
             <img id="glow-img" class="thumb" src="images/product-glow-khaki.jpg" alt="야광팁런에기걸이">
@@ -365,8 +391,10 @@
       </div>
       <div class="card" data-category="에기걸이">
         <button class="wish-btn" data-name="팁런 에기걸이" onclick="toggleWish(this)">♡</button>
-        <span class="best">⭐ 베스트</span>
-        <span class="handmade">🖐 핸드메이드</span>
+        <div class="badge-row">
+          <span class="best">BEST</span>
+          <span class="handmade">HANDMADE</span>
+        </div>
         <div class="media">
           <img class="thumb" src="images/product-necklace.jpg" alt="팁런 에기걸이">
           <p class="desc">팁런에기는 일반 에기와 달리 무게가 있고 마스크까지 더해져 무게가 더 나갑니다. 용도에 맞게 한땀한땀 수작업 하였습니다. 무거운 샤클 고리를 사용하지 않고 스텐 링을 같은 색상으로 작업하였습니다.</p>
@@ -391,8 +419,10 @@
       </div>
       <div class="card" data-category="에기걸이">
         <button class="wish-btn" data-name="에깅낚시목걸이&로드스트랩세트" onclick="toggleWish(this)">♡</button>
-        <span class="handmade">🖐 핸드메이드</span>
-        <span class="popular">🔥 인기상품</span>
+        <div class="badge-row">
+          <span class="handmade">HANDMADE</span>
+          <span class="popular">HOT</span>
+        </div>
         <div class="media">
           <div class="carousel">
             <img id="necklace-img" class="thumb" src="images/product-tiplun.jpg" alt="에깅낚시목걸이&로드스트랩세트">
@@ -412,7 +442,10 @@
       </div>
       <div class="card" data-category="훅캡">
         <button class="wish-btn" data-name="전기도금 훅캡" onclick="toggleWish(this)">♡</button>
-        <span class="popular">🔥 인기상품</span>
+        <div class="badge-row">
+          <span class="popular">HOT</span>
+          <span class="discount">-33%</span>
+        </div>
         <div class="media">
           <img class="thumb" src="images/product-hookcap.jpg" alt="전기도금 훅캡">
           <p class="desc">낚시바늘 끝을 안전하게 보호해주는 전기도금 훅캡입니다. 다양한 컬러로 제작되어 취향에 맞게 선택하실 수 있습니다.</p>
@@ -429,25 +462,34 @@
           <option value="그린퍼플">8) 그린퍼플</option>
           <option value="그린핑크">9) 그린핑크</option>
         </select>
-        <p class="old-price">1,500원</p>
-        <p class="price">1,000원</p>
+        <div class="price-row">
+          <span class="old-price">1,500원</span>
+          <span class="price">1,000원</span>
+        </div>
         <button class="add-btn" onclick="addToCart('전기도금 훅캡(' + document.getElementById('hookcap-color').value + ')', 1000)">장바구니 담기</button>
       </div>
       <div class="card" data-category="에기">
         <button class="wish-btn" data-name="수제 마이크로박스 에기" onclick="toggleWish(this)">♡</button>
-        <span class="handmade">🖐 핸드메이드</span>
+        <div class="badge-row">
+          <span class="handmade">HANDMADE</span>
+          <span class="discount">-13%</span>
+        </div>
         <div class="media">
           <div class="emoji">📦</div>
           <p class="desc">손으로 직접 도색한 수제 마이크로박스 에기입니다. 섬세한 컬러와 패턴으로 하나하나 정성껏 제작합니다.</p>
         </div>
         <h3>수제 마이크로박스 에기</h3>
-        <p class="old-price">7,500원</p>
-        <p class="price">6,500원</p>
+        <div class="price-row">
+          <span class="old-price">7,500원</span>
+          <span class="price">6,500원</span>
+        </div>
         <button class="add-btn" onclick="addToCart('수제 마이크로박스 에기', 6500)">장바구니 담기</button>
       </div>
       <div class="card" data-category="에기걸이">
         <button class="wish-btn" data-name="더유닛 에기걸이" onclick="toggleWish(this)">♡</button>
-        <span class="handmade">🖐 핸드메이드</span>
+        <div class="badge-row">
+          <span class="handmade">HANDMADE</span>
+        </div>
         <div class="media">
           <div class="emoji">🔗</div>
           <p class="desc">가볍고 실용적인 더유닛 에기걸이로, 여러 개의 에기를 깔끔하게 정리해 휴대할 수 있습니다.</p>
