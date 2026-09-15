@@ -292,6 +292,17 @@ footer .divider { color: var(--gold); margin: 10px 0; font-size: 11px; letter-sp
 .detail-info .old-price { font-size: 14px; }
 .detail-info .discount-tag { color: var(--price); font-weight: 800; font-size: 14px; }
 .detail-options .color-select { margin-bottom: 12px; padding: 11px 10px; font-size: 14px; }
+.option-label { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+.swatch-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.swatch-btn {
+  padding: 8px 14px; border: 1px solid var(--border); border-radius: 20px;
+  background: #fff; color: var(--text); font-family: inherit; font-size: 13px;
+  cursor: pointer; transition: all 0.15s ease;
+}
+.swatch-btn:hover { border-color: var(--navy-700); }
+.swatch-btn.active {
+  background: var(--navy-950); border-color: var(--navy-950); color: #fff; font-weight: 700;
+}
 .detail-actions { display: flex; gap: 10px; margin-top: auto; padding-top: 10px; }
 .detail-wish-btn {
   position: static; flex: 0 0 auto; width: 52px; border: 1px solid var(--border); background: #fff;

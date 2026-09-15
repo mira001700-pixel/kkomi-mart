@@ -234,6 +234,13 @@
     const productId = new URLSearchParams(location.search).get('id');
     const product = PRODUCTS[productId];
     let detailImgIndex = 0;
+    let selectedColor = '';
+
+    function selectColor(btn) {
+      document.querySelectorAll('.swatch-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedColor = btn.dataset.value;
+    }
 
     if (!product) {
       document.querySelector('.detail').innerHTML =
@@ -270,9 +277,11 @@
 
       let optionsHtml = '';
       if (p.colorOptions) {
-        optionsHtml += `<select id="detail-color" class="color-select">`
-          + p.colorOptions.map(o => `<option value="${o.value}">${o.label}</option>`).join('')
-          + `</select>`;
+        selectedColor = p.colorOptions[0].value;
+        optionsHtml += `<div class="option-label">색상 선택 (${p.colorOptions.length}종)</div>`;
+        optionsHtml += `<div class="swatch-grid" id="detail-color-grid">`
+          + p.colorOptions.map((o, i) => `<button type="button" class="swatch-btn${i === 0 ? ' active' : ''}" data-value="${o.value}" onclick="selectColor(this)">${o.label.replace(/^\d+\)\s*/, '')}</button>`).join('')
+          + `</div>`;
       }
       if (p.lengthOptions) {
         optionsHtml += `<select id="detail-length" class="color-select">`
@@ -297,7 +306,7 @@
     function addDetailToCart() {
       const parts = [];
       let extra = 0;
-      if (product.colorOptions) parts.push(document.getElementById('detail-color').value);
+      if (product.colorOptions) parts.push(selectedColor);
       if (product.lengthOptions) {
         const [lengthVal, ex] = document.getElementById('detail-length').value.split('|');
         parts.push(lengthVal);
