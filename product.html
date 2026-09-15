@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title id="page-title">상품 상세 - 미라마트</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 상단: 쇼핑몰 이름 + 소개 -->
+  <header>
+    <h1>🎣 미라마트</h1>
+    <p>낚시인만을 위한 핸드메이드 제작 전문점</p>
+    <div class="rule"></div>
+  </header>
+
+  <!-- 메뉴: 뒤로가기 + 장바구니 -->
+  <nav>
+    <div class="nav-links">
+      <a href="index.html">← 전체 상품 보기</a>
+    </div>
+    <button class="cart-btn" onclick="openCart()">🛒 장바구니<span id="cart-count">0</span></button>
+  </nav>
+
+  <div class="breadcrumb"><a href="index.html">전체상품</a> / <span id="breadcrumb-name">상품</span></div>
+
+  <!-- 상품 상세 -->
+  <div class="detail">
+    <div class="detail-media" id="detail-media"></div>
+    <div class="detail-info">
+      <div class="badge-row" id="detail-badges"></div>
+      <h1 id="detail-name"></h1>
+      <p class="detail-desc" id="detail-desc"></p>
+      <div class="price-row" id="detail-price-row"></div>
+      <div class="detail-options" id="detail-options"></div>
+      <div class="detail-actions">
+        <button class="wish-btn detail-wish-btn" id="detail-wish" onclick="toggleWish(this)">♡</button>
+        <button class="add-btn" onclick="addDetailToCart()">장바구니 담기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 주의사항 -->
+  <div class="caution">
+    <h2>⚠️ 주의사항</h2>
+    <ul>
+      <li>🔥 불 주의</li>
+      <li>⚠️ 날카로움 주의</li>
+      <li>오염 시 흐르는 물에 세척 후 그늘에 말려주세요</li>
+      <li>핸드메이드 특성상 마감 부분을 불로 마감하기에 그을음이 있을 수 있습니다</li>
+    </ul>
+  </div>
+
+  <!-- 연락처 -->
+  <footer>
+    <p>미라마트 고객센터</p>
+    <p>전화: 010-3988-1106</p>
+    <div class="divider">• • •</div>
+    <p>사업자등록번호: 894-25-02008</p>
+    <p>소재지: 인천광역시 동구 방축로37번길 30</p>
+    <p>🖐 모든 제품은 직접 만든 핸드메이드 제품입니다</p>
+  </footer>
+
+  <!-- 장바구니 모달 -->
+  <div id="cart-overlay" class="overlay" onclick="closeIfOverlay(event, 'cart-overlay')">
+    <div class="modal">
+      <h2>🛒 장바구니</h2>
+      <div id="cart-items"></div>
+      <div class="cart-total">총 금액: <span id="cart-total">0</span>원</div>
+      <div class="modal-actions">
+        <button class="secondary" onclick="closeModal('cart-overlay')">계속 쇼핑하기</button>
+        <button class="primary" onclick="openCheckout()">결제하기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 결제 모달 -->
+  <div id="checkout-overlay" class="overlay" onclick="closeIfOverlay(event, 'checkout-overlay')">
+    <div class="modal">
+      <h2>💳 결제하기</h2>
+      <div id="checkout-summary"></div>
+      <form id="checkout-form" onsubmit="submitCheckout(event)">
+        <label>이름
+          <input type="text" required>
+        </label>
+        <label>연락처
+          <input type="tel" required placeholder="010-0000-0000">
+        </label>
+        <label>배송 주소
+          <input type="text" required>
+        </label>
+        <label>결제수단
+          <select>
+            <option>신용카드</option>
+            <option>무통장입금</option>
+            <option>카카오페이</option>
+          </select>
+        </label>
+        <div class="modal-actions">
+          <button type="button" class="secondary" onclick="closeModal('checkout-overlay')">취소</button>
+          <button type="submit" class="primary">결제 완료</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="cart.js"></script>
+  <script>
+    const PRODUCTS = {
+      zzugap: {
+        name: '쭈갑 에기걸이',
+        badges: [{ text: 'BEST', cls: 'best' }, { text: 'HANDMADE', cls: 'handmade' }],
+        images: ['images/product-zzugap.jpg'],
+        desc: '두족류에 필요한 에기걸이를 파라코드를 이용해 손수 직접 꼬아 만드는 핸드메이드 제품입니다. 운영자 역시 낚시를 취미로 둔 앵글러로서 사용자의 마음을 담았습니다.<br>사이즈: 약 40cm',
+        price: 30000,
+        colorOptions: [
+          { label: '1) 블랙&레인보우', value: '블랙&레인보우' },
+          { label: '2) 블랙&네이비', value: '블랙&네이비' },
+          { label: '3) 카키&오렌지', value: '카키&오렌지' },
+          { label: '4) 블랙&레드', value: '블랙&레드' },
+          { label: '5) 블랙&그린', value: '블랙&그린' },
+          { label: '6) 블랙&퍼플', value: '블랙&퍼플' },
+          { label: '7) 블랙&핑크', value: '블랙&핑크' },
+          { label: '8) 블랙&옐로우', value: '블랙&옐로우' }
+        ]
+      },
+      glow: {
+        name: '야광팁런에기걸이',
+        badges: [{ text: 'BEST', cls: 'best' }, { text: 'HANDMADE', cls: 'handmade' }],
+        images: [
+          'images/product-glow-khaki.jpg',
+          'images/product-glow-black.jpg',
+          'images/product-glow-beige.jpg',
+          'images/product-glow-lit.jpg'
+        ],
+        desc: '야간 선상낚시에서도 잘 보이는 축광(야광) 파라코드 에기걸이입니다. 빛을 흡수해 어두운 곳에서 은은하게 빛나 장비를 쉽게 찾을 수 있습니다.',
+        price: 40000,
+        colorOptions: [
+          { label: '1) 브라운&옐로우', value: '브라운&옐로우' },
+          { label: '2) 브라운&그린', value: '브라운&그린' },
+          { label: '3) 브라운&스카이', value: '브라운&스카이' },
+          { label: '4) 브라운&핑크', value: '브라운&핑크' },
+          { label: '5) 블랙&옐로우', value: '블랙&옐로우' },
+          { label: '6) 블랙&그린', value: '블랙&그린' },
+          { label: '7) 블랙&스카이', value: '블랙&스카이' },
+          { label: '8) 블랙&핑크', value: '블랙&핑크' },
+          { label: '9) 카키&옐로우', value: '카키&옐로우' },
+          { label: '10) 카키&그린', value: '카키&그린' },
+          { label: '11) 카키&스카이', value: '카키&스카이' },
+          { label: '12) 카키&핑크', value: '카키&핑크' }
+        ],
+        lengthOptions: [
+          { label: '1) 40cm (+0원)', value: '40cm', extra: 0 },
+          { label: '2) 50cm (+5,000원)', value: '50cm', extra: 5000 },
+          { label: '3) 60cm (+10,000원)', value: '60cm', extra: 10000 }
+        ]
+      },
+      tiplun: {
+        name: '팁런 에기걸이',
+        badges: [{ text: 'BEST', cls: 'best' }, { text: 'HANDMADE', cls: 'handmade' }],
+        images: ['images/product-necklace.jpg'],
+        desc: '팁런에기는 일반 에기와 달리 무게가 있고 마스크까지 더해져 무게가 더 나갑니다. 용도에 맞게 한땀한땀 수작업 하였습니다. 무거운 샤클 고리를 사용하지 않고 스텐 링을 같은 색상으로 작업하였습니다.',
+        price: 40000,
+        colorOptions: [
+          { label: '1) 블랙&레인보우', value: '블랙&레인보우' },
+          { label: '2) 블랙&레드', value: '블랙&레드' },
+          { label: '3) 카키&오렌지', value: '카키&오렌지' },
+          { label: '4) 블랙&그린', value: '블랙&그린' },
+          { label: '5) 블랙&네이비', value: '블랙&네이비' },
+          { label: '6) 블랙&퍼플', value: '블랙&퍼플' },
+          { label: '7) 블랙&핑크', value: '블랙&핑크' }
+        ],
+        lengthOptions: [
+          { label: '1) 40cm (+0원)', value: '40cm', extra: 0 },
+          { label: '2) 50cm (+5,000원)', value: '50cm', extra: 5000 },
+          { label: '3) 60cm (+10,000원)', value: '60cm', extra: 10000 }
+        ]
+      },
+      necklace: {
+        name: '에깅낚시목걸이&로드스트랩세트',
+        badges: [{ text: 'HANDMADE', cls: 'handmade' }, { text: 'HOT', cls: 'popular' }],
+        images: [
+          'images/product-tiplun.jpg',
+          'images/product-necklace-blackpink.jpg',
+          'images/product-necklace-rainbow.jpg'
+        ],
+        desc: '낚시 중 소품이나 장비를 안전하게 고정해주는 고강도 파라코드 스트랩입니다.<br>사이즈: 목걸이 약 48cm / 로드스트랩 약 25~30cm',
+        price: 15000,
+        colorOptions: [
+          { label: '1) 레인보우', value: '레인보우' },
+          { label: '2) 파스텔레인보우', value: '파스텔레인보우' },
+          { label: '3) 블랙&핑크', value: '블랙&핑크' }
+        ]
+      },
+      hookcap: {
+        name: '전기도금 훅캡',
+        badges: [{ text: 'HOT', cls: 'popular' }, { text: '-33%', cls: 'discount' }],
+        images: ['images/product-hookcap.jpg'],
+        desc: '낚시바늘 끝을 안전하게 보호해주는 전기도금 훅캡입니다. 다양한 컬러로 제작되어 취향에 맞게 선택하실 수 있습니다.',
+        price: 1000,
+        oldPrice: 1500,
+        colorOptions: [
+          { label: '1) 레드', value: '레드' },
+          { label: '2) 핑크', value: '핑크' },
+          { label: '3) 오렌지', value: '오렌지' },
+          { label: '4) 그린', value: '그린' },
+          { label: '5) 블루', value: '블루' },
+          { label: '6) 퍼플', value: '퍼플' },
+          { label: '7) 핑크그린', value: '핑크그린' },
+          { label: '8) 그린퍼플', value: '그린퍼플' },
+          { label: '9) 그린핑크', value: '그린핑크' }
+        ]
+      },
+      microbox: {
+        name: '수제 마이크로박스 에기',
+        badges: [{ text: 'HANDMADE', cls: 'handmade' }, { text: '-13%', cls: 'discount' }],
+        emoji: '📦',
+        desc: '손으로 직접 도색한 수제 마이크로박스 에기입니다. 섬세한 컬러와 패턴으로 하나하나 정성껏 제작합니다.',
+        price: 6500,
+        oldPrice: 7500
+      },
+      theunit: {
+        name: '더유닛 에기걸이',
+        badges: [{ text: 'HANDMADE', cls: 'handmade' }],
+        emoji: '🔗',
+        desc: '가볍고 실용적인 더유닛 에기걸이로, 여러 개의 에기를 깔끔하게 정리해 휴대할 수 있습니다.',
+        price: 15000
+      }
+    };
+
+    const productId = new URLSearchParams(location.search).get('id');
+    const product = PRODUCTS[productId];
+    let detailImgIndex = 0;
+
+    if (!product) {
+      document.querySelector('.detail').innerHTML =
+        '<p style="grid-column:1/-1;text-align:center;padding:40px 0;color:var(--text-muted);">상품을 찾을 수 없습니다. <a href="index.html">홈으로 돌아가기</a></p>';
+    } else {
+      renderProduct(product);
+    }
+
+    function renderProduct(p) {
+      document.getElementById('page-title').textContent = p.name + ' - 미라마트';
+      document.getElementById('breadcrumb-name').textContent = p.name;
+      document.getElementById('detail-name').textContent = p.name;
+      document.getElementById('detail-desc').innerHTML = p.desc;
+      document.getElementById('detail-badges').innerHTML =
+        p.badges.map(b => `<span class="${b.cls}">${b.text}</span>`).join('');
+
+      const priceRow = document.getElementById('detail-price-row');
+      priceRow.innerHTML = p.oldPrice
+        ? `<span class="old-price">${p.oldPrice.toLocaleString()}원</span><span class="price">${p.price.toLocaleString()}원</span>`
+        : `<span class="price">${p.price.toLocaleString()}원</span>`;
+
+      const mediaEl = document.getElementById('detail-media');
+      if (p.emoji) {
+        mediaEl.innerHTML = `<div class="emoji">${p.emoji}</div>`;
+      } else if (p.images.length > 1) {
+        mediaEl.innerHTML = `
+          <img id="detail-img" src="${p.images[0]}" alt="${p.name}">
+          <button type="button" class="carousel-btn prev" onclick="changeDetailImage(-1)">‹</button>
+          <button type="button" class="carousel-btn next" onclick="changeDetailImage(1)">›</button>
+        `;
+      } else {
+        mediaEl.innerHTML = `<img id="detail-img" src="${p.images[0]}" alt="${p.name}">`;
+      }
+
+      let optionsHtml = '';
+      if (p.colorOptions) {
+        optionsHtml += `<select id="detail-color" class="color-select">`
+          + p.colorOptions.map(o => `<option value="${o.value}">${o.label}</option>`).join('')
+          + `</select>`;
+      }
+      if (p.lengthOptions) {
+        optionsHtml += `<select id="detail-length" class="color-select">`
+          + p.lengthOptions.map(o => `<option value="${o.value}|${o.extra}">${o.label}</option>`).join('')
+          + `</select>`;
+      }
+      document.getElementById('detail-options').innerHTML = optionsHtml;
+
+      const wishBtn = document.getElementById('detail-wish');
+      wishBtn.dataset.name = p.name;
+      if (isWished(p.name)) {
+        wishBtn.classList.add('active');
+        wishBtn.textContent = '♥';
+      }
+    }
+
+    function changeDetailImage(delta) {
+      detailImgIndex = (detailImgIndex + delta + product.images.length) % product.images.length;
+      document.getElementById('detail-img').src = product.images[detailImgIndex];
+    }
+
+    function addDetailToCart() {
+      const parts = [];
+      let extra = 0;
+      if (product.colorOptions) parts.push(document.getElementById('detail-color').value);
+      if (product.lengthOptions) {
+        const [lengthVal, ex] = document.getElementById('detail-length').value.split('|');
+        parts.push(lengthVal);
+        extra = Number(ex);
+      }
+      const name = parts.length ? `${product.name}(${parts.join(', ')})` : product.name;
+      addToCart(name, product.price + extra);
+      alert('장바구니에 담았습니다!');
+    }
+  </script>
+
+</body>
+</html>
