@@ -1,5 +1,20 @@
 let cart = JSON.parse(localStorage.getItem('cart') || '[]');
 
+const PRODUCT_THUMBS = {
+  '쭈갑 에기걸이': { img: 'images/product-zzugap.jpg' },
+  '야광팁런에기걸이': { img: 'images/product-glow-khaki.jpg' },
+  '팁런 에기걸이': { img: 'images/product-necklace.jpg' },
+  '에깅낚시목걸이&로드스트랩세트': { img: 'images/product-tiplun.jpg' },
+  '전기도금 훅캡': { img: 'images/product-hookcap.jpg' },
+  '수제 마이크로박스 에기': { emoji: '📦' },
+  '더유닛 에기걸이': { emoji: '🔗' }
+};
+
+function getThumb(name) {
+  const key = Object.keys(PRODUCT_THUMBS).find(k => name.startsWith(k));
+  return key ? PRODUCT_THUMBS[key] : null;
+}
+
 function saveCart() {
   localStorage.setItem('cart', JSON.stringify(cart));
 }
@@ -35,8 +50,14 @@ function updateCartUI() {
   if (cart.length === 0) {
     container.innerHTML = '<p class="empty">장바구니가 비어있습니다.</p>';
   } else {
-    container.innerHTML = cart.map((item, idx) => `
+    container.innerHTML = cart.map((item, idx) => {
+      const thumb = getThumb(item.name);
+      const thumbHtml = thumb
+        ? (thumb.img ? `<img src="${thumb.img}" alt="">` : `<span class="cart-item-emoji">${thumb.emoji}</span>`)
+        : '';
+      return `
       <div class="cart-item">
+        <div class="cart-item-thumb">${thumbHtml}</div>
         <span class="cart-item-name">${item.name}</span>
         <div class="qty-control">
           <button type="button" onclick="changeQty(${idx}, -1)">-</button>
@@ -46,7 +67,8 @@ function updateCartUI() {
         <span class="cart-item-price">${(item.price * item.qty).toLocaleString()}원</span>
         <button type="button" class="remove-btn" onclick="removeItem(${idx})">✕</button>
       </div>
-    `).join('');
+    `;
+    }).join('');
   }
   document.getElementById('cart-total').textContent = cartTotal().toLocaleString();
 }
