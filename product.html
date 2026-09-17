@@ -153,7 +153,7 @@
         name: '쭈갑 에기걸이',
         badges: [{ text: 'BEST', cls: 'best' }, { text: 'HANDMADE', cls: 'handmade' }],
         images: ['images/product-zzugap.jpg'],
-        flipImages: true,
+        imgClass: 'flip-zoom',
         desc: '두족류에 필요한 에기걸이를 파라코드를 이용해 손수 직접 꼬아 만드는 핸드메이드 제품입니다. 운영자 역시 낚시를 취미로 둔 앵글러로서 사용자의 마음을 담았습니다.<br>사이즈: 약 40cm',
         price: 30000,
         colorOptions: [
@@ -303,7 +303,7 @@
         : `<span class="price">${p.price.toLocaleString()}원</span>`;
 
       const mediaEl = document.getElementById('detail-media');
-      const flipClass = p.flipImages ? ' flip-x' : '';
+      const flipClass = p.imgClass || '';
       if (p.emoji) {
         mediaEl.innerHTML = `<div class="emoji">${p.emoji}</div>`;
       } else if (p.images.length > 1) {

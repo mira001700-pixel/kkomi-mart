@@ -155,6 +155,7 @@ nav a.active { color: var(--gold-light); border-bottom-color: var(--gold); }
 }
 .badge-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; min-height: 20px; }
 .flip-x { transform: scaleX(-1); }
+.flip-zoom { transform: scaleX(-1) scale(1.4); object-position: 30% 30%; }
 .media {
   position: relative; width: 100%; height: 156px; border-radius: 8px; overflow: hidden;
   margin-bottom: 14px; background: linear-gradient(135deg, #e9edf1, #dde3e9);
@@ -170,6 +171,7 @@ nav a.active { color: var(--gold-light); border-bottom-color: var(--gold); }
 .media .carousel .thumb { width: 100%; height: 100%; }
 .card:hover .media .thumb { transform: scale(1.06); }
 .card:hover .media .thumb.flip-x { transform: scaleX(-1) scale(1.06); }
+.card:hover .media .thumb.flip-zoom { transform: scaleX(-1) scale(1.48); }
 .carousel-btn {
   position: absolute; top: 50%; transform: translateY(-50%);
   background: rgba(7,27,44,0.55); color: #fff; border: none;
