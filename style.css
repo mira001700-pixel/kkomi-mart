@@ -56,6 +56,19 @@ nav a.active { color: var(--gold-light); border-bottom-color: var(--gold); }
   background: var(--gold); color: var(--navy-950); border-radius: 50%; padding: 1px 7px;
   font-size: 11px; font-weight: 700; margin-left: 4px;
 }
+.nav-right { display: flex; align-items: center; }
+.auth-user { color: rgba(255,255,255,0.9); font-size: 13px; font-weight: 600; padding: 0 6px; }
+
+/* 로그인 / 회원가입 모달 */
+.auth-tabs { display: flex; gap: 4px; margin-bottom: 18px; border-bottom: 1px solid var(--border); }
+.auth-tab {
+  flex: 1; background: none; border: none; padding: 10px; font-family: inherit;
+  font-size: 14px; font-weight: 700; color: var(--text-muted); cursor: pointer;
+  border-bottom: 2px solid transparent; margin-bottom: -1px;
+}
+.auth-tab.active { color: var(--navy-950); border-bottom-color: var(--gold); }
+#signup-form { display: none; }
+.auth-error { color: var(--price); font-size: 12px; margin: -4px 0 10px; min-height: 14px; }
 
 /* 상품 검색창 */
 .search-bar {

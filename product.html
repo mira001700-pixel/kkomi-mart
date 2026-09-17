@@ -22,7 +22,10 @@
     <div class="nav-links">
       <a href="index.html">← 전체 상품 보기</a>
     </div>
-    <button class="cart-btn" onclick="openCart()">🛒 장바구니<span id="cart-count">0</span></button>
+    <div class="nav-right">
+      <span id="auth-status"><button class="cart-btn" onclick="openAuth()">👤 로그인</button></span>
+      <button class="cart-btn" onclick="openCart()">🛒 장바구니<span id="cart-count">0</span></button>
+    </div>
   </nav>
 
   <div class="breadcrumb"><a href="index.html">전체상품</a> / <span id="breadcrumb-name">상품</span></div>
@@ -107,6 +110,42 @@
     </div>
   </div>
 
+  <!-- 로그인 / 회원가입 모달 -->
+  <div id="auth-overlay" class="overlay" onclick="closeIfOverlay(event, 'auth-overlay')">
+    <div class="modal">
+      <div class="auth-tabs">
+        <button type="button" class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">로그인</button>
+        <button type="button" class="auth-tab" id="tab-signup" onclick="switchAuthTab('signup')">회원가입</button>
+      </div>
+      <form id="login-form" onsubmit="handleLogin(event)">
+        <label>이메일
+          <input type="email" id="login-email" required>
+        </label>
+        <label>비밀번호
+          <input type="password" id="login-password" required minlength="6">
+        </label>
+        <p class="auth-error" id="login-error"></p>
+        <button type="submit" class="add-btn">로그인</button>
+      </form>
+      <form id="signup-form" onsubmit="handleSignup(event)">
+        <label>이름
+          <input type="text" id="signup-name" required>
+        </label>
+        <label>이메일
+          <input type="email" id="signup-email" required>
+        </label>
+        <label>비밀번호
+          <input type="password" id="signup-password" required minlength="6" placeholder="6자 이상">
+        </label>
+        <p class="auth-error" id="signup-error"></p>
+        <button type="submit" class="add-btn">회원가입</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js"></script>
+  <script src="auth.js"></script>
   <script src="cart.js"></script>
   <script>
     const PRODUCTS = {
