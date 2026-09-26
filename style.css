@@ -89,7 +89,7 @@ nav a.active { color: var(--gold-light); border-bottom-color: var(--gold); }
 
 /* 배너 - 바다 사진 */
 .banner {
-  background: linear-gradient(rgba(7,27,44,0.55), rgba(7,27,44,0.72)), url('images/banner-sea.jpg');
+  background: linear-gradient(rgba(7,27,44,0.55), rgba(7,27,44,0.72)), url('images/banner-fishing.jpg');
   background-size: cover;
   background-position: center;
   text-align: center; padding: 90px 20px;
