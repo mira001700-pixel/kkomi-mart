@@ -266,6 +266,7 @@
       theunit: {
         name: '더유닛 에기걸이',
         badges: [{ text: 'HANDMADE', cls: 'handmade' }],
+        mediaClass: 'theunit-media',
         images: ['images/product-theunit.jpg', 'images/product-theunit-detail.jpg'],
         desc: '큰 링(고리) 형태로 제작해 로드나 난간 등 다양한 곳에 걸기 편한 더유닛 에기걸이입니다. 여러 개의 에기를 한 번에 걸어 깔끔하게 정리하고, 승선 시 빠르게 꺼내 쓸 수 있습니다. 화려한 레인보우 패턴으로 포인트를 주었습니다.',
         price: 15000
@@ -304,6 +305,7 @@
         : `<span class="price">${p.price.toLocaleString()}원</span>`;
 
       const mediaEl = document.getElementById('detail-media');
+      mediaEl.className = 'detail-media' + (p.mediaClass ? ' ' + p.mediaClass : '');
       const flipClass = p.imgClass || '';
       if (p.emoji) {
         mediaEl.innerHTML = `<div class="emoji">${p.emoji}</div>`;
