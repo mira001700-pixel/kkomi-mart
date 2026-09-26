@@ -215,7 +215,11 @@
           <span class="handmade">HANDMADE</span>
         </div>
         <div class="media" onclick="location.href='product.html?id=theunit'">
-          <img class="thumb" src="images/product-theunit.jpg" alt="더유닛 에기걸이">
+          <div class="carousel">
+            <img id="theunit-img" class="thumb" src="images/product-theunit.jpg" alt="더유닛 에기걸이">
+            <button type="button" class="carousel-btn prev" onclick="event.stopPropagation(); changeSlide('theunit', -1)">‹</button>
+            <button type="button" class="carousel-btn next" onclick="event.stopPropagation(); changeSlide('theunit', 1)">›</button>
+          </div>
         </div>
         <h3>더유닛 에기걸이</h3>
         <p class="price">15,000원</p>
@@ -361,9 +365,13 @@
         'images/product-glow-black.jpg',
         'images/product-glow-beige.jpg',
         'images/product-glow-lit.jpg'
+      ],
+      theunit: [
+        'images/product-theunit.jpg',
+        'images/product-theunit-detail.jpg'
       ]
     };
-    const carouselIndex = { necklace: 0, glow: 0 };
+    const carouselIndex = { necklace: 0, glow: 0, theunit: 0 };
 
     function changeSlide(key, delta) {
       const imgs = carouselImages[key];
