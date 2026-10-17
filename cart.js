@@ -44,9 +44,10 @@ function saveCart() {
 }
 
 // price: 옵션 포함 개당 가격, extra: 그중 옵션 추가금, optionLabel: 옵션 이름(예: 50cm)
-function addToCart(name, price, extra = 0, optionLabel = '') {
+// thumb: 장바구니에 보여줄 사진 (선택한 색상 사진)
+function addToCart(name, price, extra = 0, optionLabel = '', thumb = '') {
   const item = cart.find(i => i.name === name);
-  if (item) { item.qty++; } else { cart.push({ name, price, extra, optionLabel, qty: 1 }); }
+  if (item) { item.qty++; } else { cart.push({ name, price, extra, optionLabel, thumb, qty: 1 }); }
   saveCart();
   updateCartUI();
 }
@@ -97,7 +98,7 @@ function updateCartUI() {
     container.innerHTML = '<p class="empty">장바구니가 비어있습니다.</p>';
   } else {
     container.innerHTML = cart.map((item, idx) => {
-      const thumb = getThumb(item.name);
+      const thumb = item.thumb ? { img: item.thumb } : getThumb(item.name);
       const thumbHtml = thumb
         ? (thumb.img ? `<img src="${thumb.img}" alt="">` : `<span class="cart-item-emoji">${thumb.emoji}</span>`)
         : '';
@@ -154,6 +155,7 @@ function openCheckout() {
   `).join('')
     + `<div class="summary-row"><span>배송비</span><span>${shippingLabel}</span></div>`
     + `<div class="summary-row total"><span>총 결제금액</span><span>${(cartTotal() + shipping).toLocaleString()}원</span></div>`;
+  if (typeof prefillCheckout === 'function') prefillCheckout();
   document.getElementById('checkout-overlay').classList.add('show');
 }
 

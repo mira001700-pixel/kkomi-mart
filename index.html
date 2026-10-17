@@ -6,7 +6,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20261017d">
+<link rel="stylesheet" href="style.css?v=20261017g">
 </head>
 <body>
 
@@ -35,7 +35,7 @@
   <div class="search-bar">
     <div class="search-wrap">
       <span class="search-icon">🔍</span>
-      <input type="text" id="search-input" placeholder="상품명으로 검색해보세요" oninput="searchProducts(this.value)">
+      <input type="text" id="search-input" placeholder="상품명·설명으로 검색해보세요 (예: 야광, 훅캡)" oninput="searchProducts(this.value)">
     </div>
   </div>
 
@@ -57,174 +57,9 @@
     <span class="eyebrow">Best Sellers</span>
     <h2>인기 상품</h2>
     <div class="bar"></div>
-    <div class="product-list">
-      <div class="card" data-category="에기걸이">
-        <button class="wish-btn" data-name="쭈갑 에기걸이" onclick="toggleWish(this)">♡</button>
-        <div class="badge-row">
-          <span class="best">BEST</span>
-          <span class="handmade">HANDMADE</span>
-        </div>
-        <div class="media" onclick="location.href='product.html?id=zzugap'">
-          <img id="zzugap-img" class="thumb flip-zoom" src="images/product-zzugap.jpg" alt="쭈갑 에기걸이">
-        </div>
-        <h3>쭈갑 에기걸이</h3>
-        <select id="zzugap-color" class="color-select" onchange="showColor('zzugap', this)">
-          <option value="블랙&레인보우">1) 블랙&레인보우</option>
-          <option value="블랙&네이비">2) 블랙&네이비</option>
-          <option value="카키&오렌지">3) 카키&오렌지</option>
-          <option value="블랙&레드">4) 블랙&레드</option>
-          <option value="블랙&그린">5) 블랙&그린</option>
-          <option value="블랙&퍼플">6) 블랙&퍼플</option>
-          <option value="블랙&핑크">7) 블랙&핑크</option>
-          <option value="블랙&옐로우">8) 블랙&옐로우</option>
-        </select>
-        <p class="price">30,000원</p>
-        <button class="add-btn" onclick="addToCart('쭈갑 에기걸이(' + document.getElementById('zzugap-color').value + ')', 30000)">장바구니 담기</button>
-      </div>
-      <div class="card" data-category="에기걸이">
-        <button class="wish-btn" data-name="야광팁런에기걸이" onclick="toggleWish(this)">♡</button>
-        <div class="badge-row">
-          <span class="best">BEST</span>
-          <span class="handmade">HANDMADE</span>
-        </div>
-        <div class="media" onclick="location.href='product.html?id=glow'">
-          <div class="carousel">
-            <img id="glow-img" class="thumb" src="images/product-glow-khaki.jpg" alt="야광팁런에기걸이">
-            <button type="button" class="carousel-btn prev" onclick="event.stopPropagation(); changeSlide('glow', -1)">‹</button>
-            <button type="button" class="carousel-btn next" onclick="event.stopPropagation(); changeSlide('glow', 1)">›</button>
-          </div>
-        </div>
-        <h3>야광팁런에기걸이</h3>
-        <select id="glow-color" class="color-select" onchange="showColor('glow', this)">
-          <option value="브라운&옐로우">1) 브라운&옐로우</option>
-          <option value="브라운&그린">2) 브라운&그린</option>
-          <option value="브라운&스카이">3) 브라운&스카이</option>
-          <option value="브라운&핑크">4) 브라운&핑크</option>
-          <option value="블랙&옐로우">5) 블랙&옐로우</option>
-          <option value="블랙&그린">6) 블랙&그린</option>
-          <option value="블랙&스카이">7) 블랙&스카이</option>
-          <option value="블랙&핑크">8) 블랙&핑크</option>
-          <option value="카키&옐로우">9) 카키&옐로우</option>
-          <option value="카키&그린">10) 카키&그린</option>
-          <option value="카키&스카이">11) 카키&스카이</option>
-          <option value="카키&핑크">12) 카키&핑크</option>
-        </select>
-        <select id="glow-length" class="color-select">
-          <option value="40cm|0">1) 40cm (+0원)</option>
-          <option value="50cm|5000">2) 50cm (+5,000원)</option>
-          <option value="60cm|10000">3) 60cm (+10,000원)</option>
-        </select>
-        <p class="price">40,000원</p>
-        <button class="add-btn" onclick="addGlowToCart()">장바구니 담기</button>
-      </div>
-      <div class="card" data-category="에기걸이">
-        <button class="wish-btn" data-name="팁런 에기걸이" onclick="toggleWish(this)">♡</button>
-        <div class="badge-row">
-          <span class="best">BEST</span>
-          <span class="handmade">HANDMADE</span>
-        </div>
-        <div class="media" onclick="location.href='product.html?id=tiplun'">
-          <img id="tiplun-img" class="thumb" src="images/product-necklace.jpg" alt="팁런 에기걸이">
-        </div>
-        <h3>팁런 에기걸이</h3>
-        <select id="tiplun-color" class="color-select" onchange="showColor('tiplun', this)">
-          <option value="블랙&레인보우">1) 블랙&레인보우</option>
-          <option value="블랙&레드">2) 블랙&레드</option>
-          <option value="카키&오렌지">3) 카키&오렌지</option>
-          <option value="블랙&그린">4) 블랙&그린</option>
-          <option value="블랙&네이비">5) 블랙&네이비</option>
-          <option value="블랙&퍼플">6) 블랙&퍼플</option>
-          <option value="블랙&핑크">7) 블랙&핑크</option>
-        </select>
-        <select id="tiplun-length" class="color-select">
-          <option value="40cm|0">1) 40cm (+0원)</option>
-          <option value="50cm|5000">2) 50cm (+5,000원)</option>
-          <option value="60cm|10000">3) 60cm (+10,000원)</option>
-        </select>
-        <p class="price">40,000원</p>
-        <button class="add-btn" onclick="addTiplunToCart()">장바구니 담기</button>
-      </div>
-      <div class="card" data-category="에기걸이">
-        <button class="wish-btn" data-name="에깅낚시목걸이&로드스트랩세트" onclick="toggleWish(this)">♡</button>
-        <div class="badge-row">
-          <span class="handmade">HANDMADE</span>
-          <span class="popular">HOT</span>
-        </div>
-        <div class="media" onclick="location.href='product.html?id=necklace'">
-          <div class="carousel">
-            <img id="necklace-img" class="thumb" src="images/product-tiplun.jpg" alt="에깅낚시목걸이&로드스트랩세트">
-            <button type="button" class="carousel-btn prev" onclick="event.stopPropagation(); changeSlide('necklace', -1)">‹</button>
-            <button type="button" class="carousel-btn next" onclick="event.stopPropagation(); changeSlide('necklace', 1)">›</button>
-          </div>
-        </div>
-        <h3>에깅낚시목걸이&로드스트랩세트</h3>
-        <select id="necklace-color" class="color-select" onchange="showNecklaceColor(this)">
-          <option value="레인보우">1) 레인보우</option>
-          <option value="파스텔레인보우">2) 파스텔레인보우</option>
-          <option value="블랙&핑크">3) 블랙&핑크</option>
-        </select>
-        <p class="price">15,000원</p>
-        <button class="add-btn" onclick="addToCart('에깅낚시목걸이&로드스트랩세트(' + document.getElementById('necklace-color').value + ')', 15000)">장바구니 담기</button>
-      </div>
-      <div class="card" data-category="훅캡">
-        <button class="wish-btn" data-name="전기도금 훅캡" onclick="toggleWish(this)">♡</button>
-        <div class="badge-row">
-          <span class="popular">HOT</span>
-          <span class="discount">-33%</span>
-        </div>
-        <div class="media" onclick="location.href='product.html?id=hookcap'">
-          <img id="hookcap-img" class="thumb fit-contain" src="images/product-hookcap.jpg" alt="전기도금 훅캡">
-        </div>
-        <h3>전기도금 훅캡</h3>
-        <select id="hookcap-color" class="color-select" onchange="showHookcapColor(this)">
-          <option value="레드">1) 레드</option>
-          <option value="핑크">2) 핑크</option>
-          <option value="오렌지">3) 오렌지</option>
-          <option value="그린">4) 그린</option>
-          <option value="블루">5) 블루</option>
-          <option value="퍼플">6) 퍼플</option>
-          <option value="핑크그린">7) 핑크그린</option>
-          <option value="그린퍼플">8) 그린퍼플</option>
-          <option value="그린핑크">9) 그린핑크</option>
-        </select>
-        <div class="price-row">
-          <span class="old-price">1,500원</span>
-          <span class="price">1,000원</span>
-        </div>
-        <button class="add-btn" onclick="addToCart('전기도금 훅캡(' + document.getElementById('hookcap-color').value + ')', 1000)">장바구니 담기</button>
-      </div>
-      <div class="card" data-category="에기">
-        <button class="wish-btn" data-name="수제 마이크로박스 에기" onclick="toggleWish(this)">♡</button>
-        <div class="badge-row">
-          <span class="handmade">HANDMADE</span>
-          <span class="discount">-13%</span>
-        </div>
-        <div class="media" onclick="location.href='product.html?id=microbox'">
-          <div class="emoji">📦</div>
-        </div>
-        <h3>수제 마이크로박스 에기</h3>
-        <div class="price-row">
-          <span class="old-price">7,500원</span>
-          <span class="price">6,500원</span>
-        </div>
-        <button class="add-btn" onclick="addToCart('수제 마이크로박스 에기', 6500)">장바구니 담기</button>
-      </div>
-      <div class="card" data-category="에기걸이">
-        <button class="wish-btn" data-name="더유닛 에기걸이" onclick="toggleWish(this)">♡</button>
-        <div class="badge-row">
-          <span class="handmade">HANDMADE</span>
-        </div>
-        <div class="media" id="theunit-media" onclick="location.href='product.html?id=theunit'">
-          <div class="carousel">
-            <img id="theunit-img" class="thumb" src="images/product-theunit.jpg" alt="더유닛 에기걸이">
-            <button type="button" class="carousel-btn prev" onclick="event.stopPropagation(); changeSlide('theunit', -1)">‹</button>
-            <button type="button" class="carousel-btn next" onclick="event.stopPropagation(); changeSlide('theunit', 1)">›</button>
-          </div>
-        </div>
-        <h3>더유닛 에기걸이</h3>
-        <p class="price">15,000원</p>
-        <button class="add-btn" onclick="addToCart('더유닛 에기걸이', 15000)">장바구니 담기</button>
-      </div>
+    <p class="result-info" id="result-info" hidden></p>
+    <div class="product-list" id="product-list">
+      <div class="product-status">상품을 불러오는 중입니다…</div>
     </div>
   </div>
 
@@ -273,13 +108,13 @@
       <div id="checkout-summary"></div>
       <form id="checkout-form" onsubmit="submitCheckout(event)">
         <label>이름
-          <input type="text" required>
+          <input type="text" id="checkout-name" required>
         </label>
         <label>연락처
-          <input type="tel" required placeholder="010-0000-0000">
+          <input type="tel" id="checkout-phone" required placeholder="010-0000-0000">
         </label>
         <label>배송 주소
-          <input type="text" required>
+          <input type="text" id="checkout-address" required>
         </label>
         <label>결제수단
           <select>
@@ -331,22 +166,49 @@
         </form>
         <form id="signup-form" onsubmit="handleSignup(event)" novalidate>
           <h3 class="auth-title">미라마트 회원가입</h3>
-          <p class="auth-desc">이메일과 비밀번호만 입력하면 바로 가입됩니다.</p>
-          <label for="signup-email">이메일</label>
+          <p class="auth-desc">배송을 위해 아래 정보를 입력해주세요. <span class="auth-req">*</span> 표시는 꼭 입력해야 해요.</p>
+          <label for="signup-email">이메일 <span class="auth-req">*</span></label>
           <div class="auth-field email">
             <input type="email" id="signup-email" autocomplete="email" placeholder="예: mira@naver.com">
           </div>
-          <p class="auth-hint">주문 안내를 받을 이메일 주소를 정확히 입력해주세요.</p>
-          <label for="signup-password">비밀번호</label>
-          <div class="auth-field password">
-            <input type="password" id="signup-password" autocomplete="new-password" placeholder="6자 이상 입력하세요" oninput="checkPasswordMatch()">
+          <p class="auth-hint">로그인할 때 쓰는 이메일이에요. 주문 안내도 이 주소로 보내드려요.</p>
+          <div class="auth-grid">
+            <div>
+              <label for="signup-nickname">닉네임 <span class="auth-req">*</span></label>
+              <div class="auth-field user">
+                <input type="text" id="signup-nickname" autocomplete="nickname" maxlength="12" placeholder="2~12자로 입력하세요">
+              </div>
+            </div>
+            <div>
+              <label for="signup-phone">전화번호 <span class="auth-req">*</span></label>
+              <div class="auth-field phone">
+                <input type="tel" id="signup-phone" autocomplete="tel" inputmode="numeric" maxlength="13" placeholder="010-1234-5678" oninput="formatPhone(this)">
+              </div>
+            </div>
           </div>
-          <p class="auth-hint">영문과 숫자를 섞으면 더 안전해요.</p>
-          <label for="signup-password2">비밀번호 확인</label>
-          <div class="auth-field password">
-            <input type="password" id="signup-password2" autocomplete="new-password" placeholder="비밀번호를 한 번 더 입력하세요" oninput="checkPasswordMatch()">
+          <div class="auth-grid">
+            <div>
+              <label for="signup-password">비밀번호 <span class="auth-req">*</span></label>
+              <div class="auth-field password">
+                <input type="password" id="signup-password" autocomplete="new-password" placeholder="6자 이상 입력하세요" oninput="checkPasswordMatch()">
+              </div>
+            </div>
+            <div>
+              <label for="signup-password2">비밀번호 확인 <span class="auth-req">*</span></label>
+              <div class="auth-field password">
+                <input type="password" id="signup-password2" autocomplete="new-password" placeholder="한 번 더 입력하세요" oninput="checkPasswordMatch()">
+              </div>
+            </div>
           </div>
-          <p class="auth-hint" id="signup-match">위와 같은 비밀번호를 한 번 더 입력해주세요.</p>
+          <p class="auth-hint" id="signup-match">영문과 숫자를 섞으면 더 안전해요. 같은 비밀번호를 두 번 입력해주세요.</p>
+          <label for="signup-address">주소 <span class="auth-req">*</span></label>
+          <div class="auth-field home">
+            <input type="text" id="signup-address" autocomplete="street-address" placeholder="예: 서울시 강남구 테헤란로 123">
+          </div>
+          <div class="auth-field home detail">
+            <input type="text" id="signup-address2" autocomplete="address-line2" placeholder="상세주소 (동·호수 등, 선택)">
+          </div>
+          <p class="auth-hint">상품을 받으실 주소예요. 주문할 때 바꿀 수 있어요.</p>
           <p class="auth-error" id="signup-error" role="alert"></p>
           <button type="submit" class="auth-submit">가입하기</button>
           <p class="auth-switch">이미 회원이신가요? <button type="button" onclick="switchAuthTab('login')">로그인하기</button></p>
@@ -362,89 +224,156 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
-  <script src="auth.js?v=20261017d"></script>
-  <script src="cart.js?v=20261017d"></script>
+  <script src="auth.js?v=20261017g"></script>
+  <script src="products.js?v=20261017g"></script>
+  <script src="cart.js?v=20261017g"></script>
   <script>
     let currentCategory = '전체상품';
     let currentSearch = '';
 
+    let searchTimer = null;
+    let queryRun = 0;
+
+    // 메뉴(전체상품/에기걸이/훅캡/에기)를 누르면 Supabase에서 그 카테고리 상품만 조회
     function filterProducts(category, linkEl) {
       currentCategory = category;
       document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
       linkEl.classList.add('active');
-      applyFilters();
+      runProductQuery();
     }
 
+    // 검색어를 입력하면 잠시 멈췄을 때 Supabase에서 검색 (글자마다 요청하지 않도록 0.3초 대기)
     function searchProducts(term) {
-      currentSearch = term.trim().toLowerCase();
-      applyFilters();
+      currentSearch = term.trim();
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(runProductQuery, 300);
     }
 
+    // 예전 화면 필터 함수 이름을 쓰는 곳이 있어도 동작하도록 남겨 둠
     function applyFilters() {
-      document.querySelectorAll('.product-list .card').forEach(card => {
-        const categoryMatch = currentCategory === '전체상품' || card.dataset.category === currentCategory;
-        const name = card.querySelector('h3').textContent.toLowerCase();
-        const searchMatch = !currentSearch || name.includes(currentSearch);
-        card.style.display = (categoryMatch && searchMatch) ? '' : 'none';
-      });
+      runProductQuery();
     }
 
-    const carouselImages = {
-      necklace: [
-        'images/product-tiplun.jpg',
-        'images/product-necklace-blackpink.jpg',
-        'images/product-necklace-rainbow.jpg'
-      ],
-      glow: [
-        'images/product-glow-khaki.jpg',
-        'images/product-glow-black.jpg',
-        'images/product-glow-beige.jpg',
-        'images/product-glow-lit.jpg'
-      ],
-      theunit: [
-        'images/product-theunit.jpg',
-        'images/product-theunit-detail.jpg',
-        'images/product-theunit-boat.jpg'
-      ]
-    };
-    const carouselIndex = { necklace: 0, glow: 0, theunit: 0 };
+    // ===== 상품 카드: Supabase products 테이블에서 불러와 그림 =====
+    const productMap = {};
+    const slideIndex = {};
 
-    function changeSlide(key, delta) {
-      const imgs = carouselImages[key];
-      carouselIndex[key] = (carouselIndex[key] + delta + imgs.length) % imgs.length;
-      document.getElementById(key + '-img').src = imgs[carouselIndex[key]];
-      if (key === 'necklace') document.getElementById('necklace-color').selectedIndex = NECKLACE_SLIDE_FOR_COLOR[carouselIndex[key]];
+    function badgesHtml(p) {
+      return p.badges.map(b => `<span class="${escapeHtml(b.cls || '')}">${escapeHtml(b.text || '')}</span>`).join('');
     }
 
-    // 목걸이 색상 순서(레인보우, 파스텔레인보우, 블랙&핑크) ↔ 사진 순서(tiplun, blackpink, rainbow)
-    const NECKLACE_SLIDE_FOR_COLOR = [0, 2, 1];
-
-    function showNecklaceColor(sel) {
-      carouselIndex.necklace = NECKLACE_SLIDE_FOR_COLOR[sel.selectedIndex];
-      document.getElementById('necklace-img').src = carouselImages.necklace[carouselIndex.necklace];
+    function mediaHtml(p) {
+      const link = `location.href='product.html?id=${encodeURIComponent(p.id)}'`;
+      const cls = 'media' + (p.mediaClass ? ' ' + p.mediaClass : '');
+      if (!p.images.length) {
+        return `<div class="${cls}" onclick="${link}"><div class="emoji">${escapeHtml(p.emoji || '🎣')}</div></div>`;
+      }
+      const img = `<img id="${p.id}-img" class="thumb ${p.imgClass}" src="${p.images[0]}" alt="${escapeHtml(p.name)}">`;
+      if (p.images.length === 1) return `<div class="${cls}" onclick="${link}">${img}</div>`;
+      return `<div class="${cls}" onclick="${link}"><div class="carousel">${img}
+        <button type="button" class="carousel-btn prev" onclick="event.stopPropagation(); changeSlide('${p.id}', -1)">‹</button>
+        <button type="button" class="carousel-btn next" onclick="event.stopPropagation(); changeSlide('${p.id}', 1)">›</button>
+      </div></div>`;
     }
 
-    function addTiplunToCart() {
-      const color = document.getElementById('tiplun-color').value;
-      const [length, extra] = document.getElementById('tiplun-length').value.split('|');
-      addToCart(`팁런 에기걸이(${color}, ${length})`, 40000 + Number(extra), Number(extra), length);
+    function priceHtml(p) {
+      return p.oldPrice
+        ? `<div class="price-row"><span class="old-price">${formatWon(p.oldPrice)}</span><span class="price">${formatWon(p.price)}</span></div>`
+        : `<p class="price">${formatWon(p.price)}</p>`;
     }
 
-    // 에기걸이 색상을 고르면 그 색 줄만 밝게 보이는 사진으로 바꿈
-    function showColor(key, sel) {
-      document.getElementById(key + '-img').src = 'images/colors/' + key + '-' + (sel.selectedIndex + 1) + '.jpg';
+    function cardHtml(p) {
+      const colorSelect = p.colorOptions
+        ? `<select id="${p.id}-color" class="color-select" onchange="onCardColor('${p.id}', this)">`
+          + p.colorOptions.map((o, i) => `<option value="${i}">${escapeHtml(o.label)}</option>`).join('') + `</select>`
+        : '';
+      const lengthSelect = p.lengthOptions
+        ? `<select id="${p.id}-length" class="color-select">`
+          + p.lengthOptions.map((o, i) => `<option value="${i}">${escapeHtml(o.label)}</option>`).join('') + `</select>`
+        : '';
+      return `
+      <div class="card" data-category="${escapeHtml(p.category)}" data-id="${p.id}">
+        <button class="wish-btn" data-name="${escapeHtml(p.name)}" onclick="toggleWish(this)">♡</button>
+        <div class="badge-row">${badgesHtml(p)}</div>
+        ${mediaHtml(p)}
+        <h3>${escapeHtml(p.name)}</h3>
+        ${colorSelect}${lengthSelect}
+        ${priceHtml(p)}
+        <button class="add-btn" onclick="addCardToCart('${p.id}')">장바구니 담기</button>
+      </div>`;
     }
 
-    // 훅캡 색상을 고르면 그 색 사진으로 바꿈
-    function showHookcapColor(sel) {
-      document.getElementById('hookcap-img').src = 'images/hookcap-' + (sel.selectedIndex + 1) + '.jpg';
+    // 현재 메뉴·검색어로 Supabase에서 상품을 조회해 카드로 그림
+    async function runProductQuery() {
+      const run = ++queryRun;
+      const listEl = document.getElementById('product-list');
+      const infoEl = document.getElementById('result-info');
+      const term = cleanSearchTerm(currentSearch);
+      const { products, offline } = await queryProducts({ category: currentCategory, term });
+      if (run !== queryRun) return; // 더 최근 검색이 이미 시작됨
+
+      if (!products) {
+        infoEl.hidden = true;
+        listEl.innerHTML = `<div class="product-status">상품을 불러오지 못했습니다. 인터넷 연결을 확인한 뒤 <button type="button" onclick="location.reload()">새로고침</button> 해주세요.</div>`;
+        return;
+      }
+
+      const filtered = term || currentCategory !== '전체상품';
+      const where = [currentCategory !== '전체상품' ? currentCategory : '', term ? `'${term}'` : ''].filter(Boolean).join(' · ');
+      infoEl.hidden = !filtered && !offline;
+      infoEl.innerHTML = (filtered ? `<b>${escapeHtml(where)}</b> 검색 결과 <b>${products.length}개</b>` : '')
+        + (offline ? `<span class="result-offline">서버에 연결하지 못해 저장된 목록에서 보여드려요</span>` : '');
+
+      if (!products.length) {
+        listEl.innerHTML = term
+          ? `<div class="product-status">'${escapeHtml(term)}'에 맞는 상품이 없습니다. 다른 검색어로 찾아보세요.</div>`
+          : `<div class="product-status">지금 판매 중인 상품이 없습니다.</div>`;
+        return;
+      }
+      products.forEach(p => { productMap[p.id] = p; slideIndex[p.id] = 0; });
+      listEl.innerHTML = products.map(cardHtml).join('');
+      initWishlist();
     }
 
-    function addGlowToCart() {
-      const color = document.getElementById('glow-color').value;
-      const [length, extra] = document.getElementById('glow-length').value.split('|');
-      addToCart(`야광팁런에기걸이(${color}, ${length})`, 40000 + Number(extra), Number(extra), length);
+    // 주소에 ?q=검색어 가 있으면 그 검색어로 시작 (예: index.html?q=훅캡)
+    function startProducts() {
+      const q = new URLSearchParams(location.search).get('q');
+      if (q) {
+        currentSearch = q;
+        document.getElementById('search-input').value = q;
+      }
+      runProductQuery();
     }
+
+    function changeSlide(id, delta) {
+      const p = productMap[id];
+      slideIndex[id] = (slideIndex[id] + delta + p.images.length) % p.images.length;
+      const src = p.images[slideIndex[id]];
+      document.getElementById(id + '-img').src = src;
+      // 넘긴 사진이 어떤 색상의 사진이면 색상 선택도 맞춰 줌 (예: 목걸이 세트)
+      const k = (p.colorOptions || []).findIndex(o => o.img === src);
+      if (k >= 0) document.getElementById(id + '-color').selectedIndex = k;
+    }
+
+    // 색상을 고르면 그 색상 사진으로 바꿈
+    function onCardColor(id, sel) {
+      const p = productMap[id];
+      const opt = p.colorOptions[sel.selectedIndex];
+      if (!opt || !opt.img) return;
+      document.getElementById(id + '-img').src = opt.img;
+      const k = p.images.indexOf(opt.img);
+      if (k >= 0) slideIndex[id] = k;
+    }
+
+    function addCardToCart(id) {
+      const p = productMap[id];
+      const colorOpt = p.colorOptions ? p.colorOptions[document.getElementById(id + '-color').selectedIndex] : null;
+      const lengthOpt = p.lengthOptions ? p.lengthOptions[document.getElementById(id + '-length').selectedIndex] : null;
+      const e = buildCartEntry(p, colorOpt, lengthOpt);
+      addToCart(e.name, e.price, e.extra, e.optionLabel, e.thumb);
+    }
+
+    startProducts();
   </script>
 
 </body>

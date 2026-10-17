@@ -57,6 +57,37 @@ function checkInputs(prefix, email, password) {
   return '';
 }
 
+const PHONE_RE = /^01[016789]-?\d{3,4}-?\d{4}$/;
+
+// 회원가입 칸을 화면 위에서 아래 순서대로 확인 (이메일 → 닉네임 → 전화번호 → 비밀번호 → 주소)
+function checkSignupInputs(v) {
+  ['signup-email', 'signup-nickname', 'signup-phone', 'signup-password', 'signup-password2', 'signup-address']
+    .forEach(id => markInvalid(id, false));
+  const bad = (id, msg) => { markInvalid(id, true); return msg; };
+  if (!v.email) return bad('signup-email', '이메일을 입력해주세요.');
+  if (!EMAIL_RE.test(v.email)) return bad('signup-email', '이메일 형식이 올바르지 않습니다. 예: mira@naver.com');
+  if (!v.nickname) return bad('signup-nickname', '닉네임을 입력해주세요.');
+  if (v.nickname.length < 2) return bad('signup-nickname', '닉네임은 2자 이상으로 입력해주세요.');
+  if (!v.phone) return bad('signup-phone', '전화번호를 입력해주세요.');
+  if (!PHONE_RE.test(v.phone)) return bad('signup-phone', '전화번호 형식이 올바르지 않습니다. 예: 010-1234-5678');
+  if (!v.password) return bad('signup-password', '비밀번호를 입력해주세요.');
+  if (v.password.length < MIN_PASSWORD) return bad('signup-password', `비밀번호가 너무 짧습니다. ${MIN_PASSWORD}자 이상 입력해주세요. (지금 ${v.password.length}자)`);
+  if (!v.password2) return bad('signup-password2', '비밀번호 확인 칸에 비밀번호를 한 번 더 입력해주세요.');
+  if (v.password2 !== v.password) return bad('signup-password2', '두 비밀번호가 서로 다릅니다. 같은 비밀번호를 두 번 입력해주세요.');
+  if (!v.address) return bad('signup-address', '주소를 입력해주세요. 상품을 받으실 주소가 필요해요.');
+  if (v.address.length < 5) return bad('signup-address', '주소를 조금 더 자세히 입력해주세요. 예: 서울시 강남구 테헤란로 123');
+  return '';
+}
+
+// 숫자만 입력해도 010-1234-5678 모양으로 하이픈을 넣어줌
+function formatPhone(input) {
+  const d = input.value.replace(/\D/g, '').slice(0, 11);
+  if (d.length < 4) input.value = d;
+  else if (d.length < 8) input.value = `${d.slice(0, 3)}-${d.slice(3)}`;
+  else if (d.length < 11) input.value = `${d.slice(0, 3)}-${d.slice(3, 6)}-${d.slice(6)}`;
+  else input.value = `${d.slice(0, 3)}-${d.slice(3, 7)}-${d.slice(7)}`;
+}
+
 // 비밀번호 확인 칸 아래에 일치 여부를 바로 보여줌
 function checkPasswordMatch() {
   const pw = document.getElementById('signup-password').value;
@@ -64,7 +95,7 @@ function checkPasswordMatch() {
   const el = document.getElementById('signup-match');
   el.classList.remove('ok', 'bad');
   if (!pw2) {
-    el.textContent = '위와 같은 비밀번호를 한 번 더 입력해주세요.';
+    el.textContent = '영문과 숫자를 섞으면 더 안전해요. 같은 비밀번호를 두 번 입력해주세요.';
   } else if (pw === pw2) {
     el.textContent = '✓ 비밀번호가 일치합니다.';
     el.classList.add('ok');
@@ -138,15 +169,29 @@ async function handleLogin(e) {
 async function handleSignup(e) {
   e.preventDefault();
   const form = e.target;
-  const email = document.getElementById('signup-email').value.trim();
-  const password = document.getElementById('signup-password').value;
+  const val = id => document.getElementById(id).value.trim();
+  const v = {
+    email: val('signup-email'),
+    nickname: val('signup-nickname'),
+    phone: val('signup-phone'),
+    password: document.getElementById('signup-password').value,
+    password2: document.getElementById('signup-password2').value,
+    address: val('signup-address'),
+    address2: val('signup-address2')
+  };
+  const email = v.email;
   showError('signup', '');
-  const problem = checkInputs('signup', email, password);
+  const problem = checkSignupInputs(v);
   if (problem) { showError('signup', problem); return; }
   if (!sb) { showError('signup', '회원 서비스에 연결하지 못했습니다. 페이지를 새로고침한 뒤 다시 시도해주세요.'); return; }
   setBusy(form, true, '가입 중…');
   try {
-    const { data, error } = await sb.auth.signUp({ email, password });
+    // 닉네임·전화번호·주소는 Supabase 회원 정보(user_metadata)에 함께 저장
+    const { data, error } = await sb.auth.signUp({
+      email,
+      password: v.password,
+      options: { data: { nickname: v.nickname, phone: v.phone, address: v.address, address_detail: v.address2 } }
+    });
     if (error) { showError('signup', translateAuthError(error)); return; }
     // 이메일 인증을 켠 프로젝트에서는 이미 가입된 이메일도 오류 없이 빈 identities로 돌아옵니다
     if (data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
@@ -158,7 +203,7 @@ async function handleSignup(e) {
     form.style.display = 'none';
     document.querySelector('#auth-overlay .auth-tabs').hidden = true;
     document.getElementById('signup-done-msg').textContent = data.session
-      ? `${email} 계정으로 로그인되었습니다.`
+      ? `${v.nickname} 회원님, ${email} 계정으로 로그인되었습니다.`
       : `${email}로 인증 메일을 보냈습니다. 메일의 링크를 누르면 로그인할 수 있습니다.`;
     document.getElementById('signup-done').hidden = false;
   } catch (err) {
@@ -166,6 +211,22 @@ async function handleSignup(e) {
   } finally {
     setBusy(form, false);
   }
+}
+
+// 로그인한 회원이 결제창을 열면 가입 때 입력한 정보를 빈 칸에 채워줌
+async function prefillCheckout() {
+  if (!sb) return;
+  const { data } = await sb.auth.getSession();
+  const user = data && data.session && data.session.user;
+  if (!user) return;
+  const meta = user.user_metadata || {};
+  const fill = (id, value) => {
+    const el = document.getElementById(id);
+    if (el && !el.value && value) el.value = value;
+  };
+  fill('checkout-name', meta.nickname);
+  fill('checkout-phone', meta.phone);
+  fill('checkout-address', [meta.address, meta.address_detail].filter(Boolean).join(' '));
 }
 
 async function handleLogout() {
@@ -181,7 +242,7 @@ function renderAuthStatus(user) {
   if (!el) return;
   if (user) {
     const meta = user.user_metadata || {};
-    const displayName = meta.name || (user.email ? user.email.split('@')[0] : '회원');
+    const displayName = meta.nickname || meta.name || (user.email ? user.email.split('@')[0] : '회원');
     el.innerHTML = `<span class="auth-user">${escapeHtml(displayName)} 회원님 환영합니다</span><button class="auth-btn" onclick="handleLogout()">로그아웃</button>`;
   } else {
     el.innerHTML = `<button class="auth-btn" onclick="openAuth('login')">👤 로그인</button><button class="auth-btn primary" onclick="openAuth('signup')">회원가입</button>`;

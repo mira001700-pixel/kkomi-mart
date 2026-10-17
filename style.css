@@ -78,7 +78,7 @@ nav a.active { color: var(--gold-light); border-bottom-color: var(--gold); }
 .auth-tab.active { color: var(--navy-950); border-bottom-color: var(--gold); }
 #signup-form { display: none; }
 #auth-overlay .modal.auth-modal {
-  position: relative; display: flex; width: 100%; max-width: 860px; max-height: 92vh; padding: 0;
+  position: relative; display: flex; width: 100%; max-width: 940px; max-height: 94vh; padding: 0;
   overflow: hidden auto; border-radius: 20px; text-align: left; background: #fff;
   box-shadow: 0 30px 80px rgba(7,27,44,0.35);
 }
@@ -122,6 +122,16 @@ nav a.active { color: var(--gold-light); border-bottom-color: var(--gold); }
 }
 .auth-field.email::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23123a5c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5' width='18' height='14' rx='2'/%3E%3Cpath d='m3 7 9 6 9-6'/%3E%3C/svg%3E"); }
 .auth-field.password::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23123a5c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='11' width='16' height='10' rx='2'/%3E%3Cpath d='M8 11V7a4 4 0 0 1 8 0v4'/%3E%3C/svg%3E"); }
+.auth-field.user::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23123a5c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3Cpath d='M4 21a8 8 0 0 1 16 0'/%3E%3C/svg%3E"); }
+.auth-field.phone::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23123a5c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='6' y='2' width='12' height='20' rx='2.5'/%3E%3Cpath d='M11 18h2'/%3E%3C/svg%3E"); }
+.auth-field.home::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23123a5c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 11 12 4l9 7'/%3E%3Cpath d='M5 10v10h14V10'/%3E%3Cpath d='M10 20v-5h4v5'/%3E%3C/svg%3E"); }
+.auth-field.home.detail::before { opacity: 0; }
+.auth-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; margin-bottom: 10px; }
+.auth-grid > div { min-width: 0; }
+.auth-req { color: var(--gold); font-weight: 800; }
+#signup-form .auth-hint { margin-bottom: 16px; }
+#signup-form .auth-grid + .auth-grid { margin-top: 0; }
+#signup-form .auth-grid + .auth-hint, #signup-form .auth-grid + .auth-grid { margin-top: -2px; }
 #auth-overlay input {
   display: block; width: 100%; box-sizing: border-box; height: 58px; padding: 0 18px 0 50px; margin: 0;
   border: 1.5px solid #dbe3eb; border-radius: 12px; font-size: 16px; font-family: inherit; color: var(--text);
@@ -163,6 +173,7 @@ nav a.active { color: var(--gold-light); border-bottom-color: var(--gold); }
   .auth-side-text { margin-bottom: 0; }
   .auth-side-list, .auth-brand { display: none; }
   .auth-main { padding: 28px 22px 28px; }
+  .auth-grid { grid-template-columns: 1fr; }
   .auth-title { font-size: 23px; }
 }
 
@@ -253,7 +264,12 @@ nav a.active { color: var(--gold-light); border-bottom-color: var(--gold); }
 .flip-x { transform: scaleX(-1); }
 .flip-zoom { transform: scaleX(-1); object-fit: contain !important; }
 .fit-contain { object-fit: contain !important; }
-#theunit-media, #detail-media.theunit-media {
+.product-status { grid-column: 1 / -1; text-align: center; padding: 48px 16px; color: var(--text-muted); font-size: 15px; }
+.result-info { max-width: 1100px; margin: 0 auto 16px; font-size: 14px; color: var(--text-muted); text-align: left; }
+.result-info b { color: var(--navy-950); }
+.result-offline { display: inline-block; margin-left: 10px; padding: 2px 10px; border-radius: 999px; background: #fff4e5; color: #a35a00; font-size: 12px; font-weight: 600; }
+.product-status button { background: none; border: none; padding: 0; color: var(--navy-700); font-weight: 700; font-size: 15px; font-family: inherit; text-decoration: underline; cursor: pointer; }
+#theunit-media, .media.theunit-media, #detail-media.theunit-media {
   background-image: url('images/product-theunit-detail.jpg');
   background-size: cover; background-position: center;
 }
