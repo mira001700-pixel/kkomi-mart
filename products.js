@@ -98,5 +98,5 @@ function buildCartEntry(p, colorOpt, lengthOpt) {
     optionLabel = lengthOpt.value;
   }
   const name = parts.length ? `${p.name}(${parts.join(', ')})` : p.name;
-  return { name, price: p.price + extra, extra, optionLabel, thumb };
+  return { name, price: p.price + extra, extra, optionLabel, thumb, productId: p.id };
 }

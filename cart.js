@@ -44,12 +44,109 @@ function saveCart() {
 }
 
 // price: 옵션 포함 개당 가격, extra: 그중 옵션 추가금, optionLabel: 옵션 이름(예: 50cm)
-// thumb: 장바구니에 보여줄 사진 (선택한 색상 사진)
-function addToCart(name, price, extra = 0, optionLabel = '', thumb = '') {
-  const item = cart.find(i => i.name === name);
-  if (item) { item.qty++; } else { cart.push({ name, price, extra, optionLabel, thumb, qty: 1 }); }
+// thumb: 장바구니에 보여줄 사진 (선택한 색상 사진), productId: products 테이블의 id
+function addToCart(name, price, extra = 0, optionLabel = '', thumb = '', productId = null) {
+  let item = cart.find(i => i.name === name);
+  if (item) {
+    item.qty = Math.min(MAX_QTY, item.qty + 1);
+  } else {
+    item = { name, price, extra, optionLabel, thumb, productId, qty: 1 };
+    cart.push(item);
+  }
   saveCart();
   updateCartUI();
+  pushCartItem(item);
+}
+
+// ===== 회원 장바구니: Supabase cart_items 테이블과 동기화 (supabase/cart.sql 참고) =====
+// 비회원은 브라우저에만 저장. 로그인하면 비회원 때 담은 상품을 회원 장바구니에 합치고,
+// 이후 담기·수량 변경·삭제를 Supabase에도 바로 저장해 다른 기기에서도 같은 장바구니를 보여줌.
+const MAX_QTY = 99;
+const CART_OWNER_KEY = 'cart-owner'; // 브라우저 장바구니가 어느 회원 것인지 (비회원이면 없음)
+let cartUserId = null;
+
+function cartRow(item) {
+  return {
+    user_id: cartUserId, item_key: item.name, product_id: item.productId || null, name: item.name,
+    price: item.price, extra: item.extra || 0, option_label: item.optionLabel || '', thumb: item.thumb || '',
+    qty: Math.min(MAX_QTY, Math.max(1, item.qty))
+  };
+}
+
+function rowToCartItem(r) {
+  return { name: r.name, price: r.price, extra: r.extra, optionLabel: r.option_label, thumb: r.thumb, productId: r.product_id, qty: r.qty };
+}
+
+function warnCartSync(err) {
+  console.warn('장바구니를 서버에 저장하지 못했습니다:', err);
+  const note = document.getElementById('cart-sync-note');
+  if (note) {
+    note.textContent = '⚠ 장바구니를 서버에 저장하지 못했습니다. 인터넷 연결을 확인해주세요. (이 브라우저에는 저장되어 있어요)';
+    note.className = 'cart-sync-note error';
+  }
+}
+
+async function pushCartItem(item) {
+  if (!cartUserId) return;
+  const { error } = await sb.from('cart_items').upsert(cartRow(item));
+  if (error) warnCartSync(error);
+}
+
+async function deleteCartItem(name) {
+  if (!cartUserId) return;
+  const { error } = await sb.from('cart_items').delete().eq('user_id', cartUserId).eq('item_key', name);
+  if (error) warnCartSync(error);
+}
+
+async function clearRemoteCart() {
+  if (!cartUserId) return;
+  const { error } = await sb.from('cart_items').delete().eq('user_id', cartUserId);
+  if (error) warnCartSync(error);
+}
+
+async function syncCartOnLogin(user) {
+  cartUserId = user.id;
+  const { data, error } = await sb.from('cart_items').select('*').order('created_at');
+  if (error) { warnCartSync(error); updateCartUI(); return; }
+  const merged = data.map(rowToCartItem);
+  let owner = null;
+  try { owner = localStorage.getItem(CART_OWNER_KEY); } catch (e) { /* 저장소 막힘 */ }
+  // 이 브라우저 장바구니가 비회원 것이면(로그인 직전에 담은 상품) 회원 장바구니에 합침
+  if (owner !== user.id && cart.length) {
+    for (const g of cart) {
+      const same = merged.find(i => i.name === g.name);
+      if (same) same.qty = Math.min(MAX_QTY, same.qty + g.qty);
+      else merged.push({ ...g });
+    }
+    const { error: upErr } = await sb.from('cart_items').upsert(merged.map(cartRow));
+    if (upErr) warnCartSync(upErr);
+  }
+  cart = merged;
+  try { localStorage.setItem(CART_OWNER_KEY, user.id); } catch (e) { /* 저장소 막힘 */ }
+  saveCart();
+  updateCartUI();
+}
+
+// 로그아웃하면 이 브라우저에서 회원 장바구니를 지움 (계정에는 그대로 남아 다음 로그인 때 돌아옴)
+function clearCartOnLogout() {
+  cartUserId = null;
+  cart = [];
+  try { localStorage.removeItem(CART_OWNER_KEY); } catch (e) { /* 저장소 막힘 */ }
+  saveCart();
+  updateCartUI();
+}
+
+if (typeof sb !== 'undefined' && sb) {
+  sb.auth.onAuthStateChange((_event, session) => {
+    const user = session ? session.user : null;
+    // 인증 콜백 안에서 바로 Supabase를 호출하면 멈출 수 있어 한 박자 뒤에 실행
+    setTimeout(() => {
+      let owner = null;
+      try { owner = localStorage.getItem(CART_OWNER_KEY); } catch (e) { /* 저장소 막힘 */ }
+      if (user && user.id !== cartUserId) syncCartOnLogin(user);
+      else if (!user && (cartUserId || owner)) clearCartOnLogout();
+    }, 0);
+  });
 }
 
 function won(n) {
@@ -73,17 +170,136 @@ function priceBreakdown(item) {
     <span class="cart-item-unit">기본 ${won(base)} → 개당 <b>${won(item.price)}</b></span>`;
 }
 
+// ===== 장바구니에서 색상·길이 옵션 바로 바꾸기 =====
+// 상품의 전체 옵션 목록은 담을 때 저장해두지 않으므로, 바꾸려는 순간 products.js의
+// fetchProduct()로 한 번만 불러와 캐싱해 둠 (index.html의 productMap에 이미 있어도 다시 불러옴 - 단순함 우선)
+const productOptionCache = {};
+let optionEditIdx = null;
+let optionEditProduct = null; // 로딩 중이면 null
+
+async function ensureProductOptions(productId) {
+  if (productOptionCache[productId] !== undefined) return productOptionCache[productId];
+  if (typeof fetchProduct !== 'function') return null;
+  const { product } = await fetchProduct(productId);
+  productOptionCache[productId] = product || null;
+  return productOptionCache[productId];
+}
+
+async function openOptionEditor(idx) {
+  const item = cart[idx];
+  if (!item || !item.productId) return;
+  optionEditIdx = idx;
+  optionEditProduct = null;
+  updateCartUI();
+  const product = await ensureProductOptions(item.productId);
+  if (optionEditIdx !== idx) return; // 그 사이 닫혔거나 다른 항목을 열었음
+  optionEditProduct = product;
+  updateCartUI();
+}
+
+function closeOptionEditor() {
+  optionEditIdx = null;
+  optionEditProduct = null;
+  updateCartUI();
+}
+
+// 이름 맨 앞 괄호의 첫 항목이 색상 (예: '팁런 에기걸이(블랙&레드, 50cm)' → '블랙&레드')
+function currentColorIndex(product, item) {
+  if (!product.colorOptions) return -1;
+  const m = item.name.match(/\(([^,)]+)/);
+  const token = m ? m[1].trim() : '';
+  return product.colorOptions.findIndex(o => o.value === token);
+}
+
+function currentLengthIndex(product, item) {
+  if (!product.lengthOptions) return -1;
+  return product.lengthOptions.findIndex(o => o.value === item.optionLabel);
+}
+
+function optionEditorHtml(idx, item) {
+  if (optionEditIdx !== idx) {
+    return `<button type="button" class="option-edit-btn" onclick="openOptionEditor(${idx})">옵션변경</button>`;
+  }
+  if (!optionEditProduct) {
+    return `<span class="option-edit-loading">옵션을 불러오는 중…</span>`;
+  }
+  const product = optionEditProduct;
+  if (!product.colorOptions && !product.lengthOptions) {
+    return `<span class="option-edit-loading">이 상품은 바꿀 수 있는 옵션이 없습니다.</span>`;
+  }
+  const colorIdx = currentColorIndex(product, item);
+  const lengthIdx = currentLengthIndex(product, item);
+  const colorSelect = product.colorOptions
+    ? `<select onchange="changeCartOption(${idx}, 'color', this.value)">`
+      + product.colorOptions.map((o, i) => `<option value="${i}"${i === colorIdx ? ' selected' : ''}>${escapeHtml(o.label)}</option>`).join('')
+      + `</select>`
+    : '';
+  const lengthSelect = product.lengthOptions
+    ? `<select onchange="changeCartOption(${idx}, 'length', this.value)">`
+      + product.lengthOptions.map((o, i) => `<option value="${i}"${i === lengthIdx ? ' selected' : ''}>${escapeHtml(o.label)}</option>`).join('')
+      + `</select>`
+    : '';
+  return `<div class="option-edit-row">${colorSelect}${lengthSelect}<button type="button" class="option-edit-close" onclick="closeOptionEditor()">닫기</button></div>`;
+}
+
+function changeCartOption(idx, field, selValue) {
+  const item = cart[idx];
+  const product = optionEditProduct;
+  if (!item || !product) return;
+
+  const colorIdx = field === 'color' ? Number(selValue) : currentColorIndex(product, item);
+  const lengthIdx = field === 'length' ? Number(selValue) : currentLengthIndex(product, item);
+  const colorOpt = product.colorOptions && colorIdx >= 0 ? product.colorOptions[colorIdx] : null;
+  const lengthOpt = product.lengthOptions && lengthIdx >= 0 ? product.lengthOptions[lengthIdx] : null;
+  const e = buildCartEntry(product, colorOpt, lengthOpt);
+  const oldName = item.name;
+
+  // 바꾼 옵션 조합이 이미 장바구니에 있던 다른 줄과 같아지면 수량을 합침
+  const dupIdx = cart.findIndex((i, j) => j !== idx && i.name === e.name);
+  optionEditIdx = null;
+  optionEditProduct = null;
+  if (dupIdx !== -1) {
+    const dupItem = cart[dupIdx];
+    dupItem.qty = Math.min(MAX_QTY, dupItem.qty + item.qty);
+    cart.splice(idx, 1);
+    saveCart();
+    updateCartUI();
+    if (oldName !== e.name) deleteCartItem(oldName);
+    pushCartItem(dupItem);
+    return;
+  }
+
+  item.name = e.name;
+  item.price = e.price;
+  item.extra = e.extra;
+  item.optionLabel = e.optionLabel;
+  item.thumb = e.thumb;
+  saveCart();
+  updateCartUI();
+  if (oldName !== item.name) deleteCartItem(oldName);
+  pushCartItem(item);
+}
+
 function changeQty(idx, delta) {
-  cart[idx].qty += delta;
-  if (cart[idx].qty <= 0) cart.splice(idx, 1);
+  const item = cart[idx];
+  item.qty = Math.min(MAX_QTY, item.qty + delta);
+  if (item.qty <= 0) {
+    cart.splice(idx, 1);
+    deleteCartItem(item.name);
+    optionEditIdx = null; optionEditProduct = null;
+  } else {
+    pushCartItem(item);
+  }
   saveCart();
   updateCartUI();
 }
 
 function removeItem(idx) {
-  cart.splice(idx, 1);
+  const [item] = cart.splice(idx, 1);
+  optionEditIdx = null; optionEditProduct = null;
   saveCart();
   updateCartUI();
+  if (item) deleteCartItem(item.name);
 }
 
 function cartTotal() {
@@ -92,6 +308,14 @@ function cartTotal() {
 
 function updateCartUI() {
   document.getElementById('cart-count').textContent = cart.reduce((sum, i) => sum + i.qty, 0);
+
+  const note = document.getElementById('cart-sync-note');
+  if (note) {
+    note.className = 'cart-sync-note' + (cartUserId ? ' synced' : '');
+    note.innerHTML = cartUserId
+      ? '☁ 회원 장바구니에 저장돼요. 다른 기기에서 로그인해도 그대로 보여요.'
+      : '로그인하면 장바구니가 계정에 저장돼 다른 기기에서도 볼 수 있어요. <button type="button" onclick="closeModal(\'cart-overlay\'); openAuth(\'login\')">로그인</button>';
+  }
 
   const container = document.getElementById('cart-items');
   if (cart.length === 0) {
@@ -108,6 +332,7 @@ function updateCartUI() {
         <div class="cart-item-info">
           <span class="cart-item-name">${item.name}</span>
           <span class="cart-item-option">${priceBreakdown(item)}</span>
+          ${item.productId ? optionEditorHtml(idx, item) : ''}
         </div>
         <div class="qty-control">
           <button type="button" onclick="changeQty(${idx}, -1)">-</button>
@@ -165,6 +390,7 @@ function submitCheckout(e) {
   cart = [];
   saveCart();
   updateCartUI();
+  clearRemoteCart();
   closeModal('checkout-overlay');
   e.target.reset();
 }

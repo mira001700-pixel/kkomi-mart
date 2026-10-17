@@ -6,7 +6,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20261017g">
+<link rel="stylesheet" href="style.css?v=20261017h">
 </head>
 <body>
 
@@ -71,6 +71,7 @@
   <div id="cart-overlay" class="overlay" onclick="closeIfOverlay(event, 'cart-overlay')">
     <div class="modal">
       <h2>🛒 장바구니</h2>
+      <p class="cart-sync-note" id="cart-sync-note"></p>
       <div id="cart-items"></div>
       <div class="cart-summary">
         <div class="cart-summary-row"><span>상품 금액</span><span id="cart-base-total">0원</span></div>
@@ -207,9 +208,9 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
-  <script src="auth.js?v=20261017g"></script>
-  <script src="products.js?v=20261017g"></script>
-  <script src="cart.js?v=20261017g"></script>
+  <script src="auth.js?v=20261017h"></script>
+  <script src="products.js?v=20261017h"></script>
+  <script src="cart.js?v=20261017h"></script>
   <script>
     const productId = new URLSearchParams(location.search).get('id');
     let product = null;
@@ -304,7 +305,7 @@
       const colorOpt = product.colorOptions ? product.colorOptions.find(o => o.value === selectedColor) : null;
       const lengthOpt = product.lengthOptions ? product.lengthOptions[document.getElementById('detail-length').selectedIndex] : null;
       const e = buildCartEntry(product, colorOpt, lengthOpt);
-      addToCart(e.name, e.price, e.extra, e.optionLabel, e.thumb);
+      addToCart(e.name, e.price, e.extra, e.optionLabel, e.thumb, e.productId);
       alert('장바구니에 담았습니다!');
     }
   </script>
