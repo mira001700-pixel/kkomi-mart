@@ -4,13 +4,37 @@ const PRODUCT_THUMBS = {
   '쭈갑 에기걸이': { img: 'images/product-zzugap.jpg' },
   '야광팁런에기걸이': { img: 'images/product-glow-khaki.jpg' },
   '팁런 에기걸이': { img: 'images/product-necklace.jpg' },
+  '에깅낚시목걸이&로드스트랩세트(파스텔레인보우)': { img: 'images/product-necklace-rainbow.jpg' },
+  '에깅낚시목걸이&로드스트랩세트(블랙&핑크)': { img: 'images/product-necklace-blackpink.jpg' },
   '에깅낚시목걸이&로드스트랩세트': { img: 'images/product-tiplun.jpg' },
+  '전기도금 훅캡(레드)': { img: 'images/hookcap-1.jpg' },
+  '전기도금 훅캡(핑크)': { img: 'images/hookcap-2.jpg' },
+  '전기도금 훅캡(오렌지)': { img: 'images/hookcap-3.jpg' },
+  '전기도금 훅캡(그린)': { img: 'images/hookcap-4.jpg' },
+  '전기도금 훅캡(블루)': { img: 'images/hookcap-5.jpg' },
+  '전기도금 훅캡(퍼플)': { img: 'images/hookcap-6.jpg' },
+  '전기도금 훅캡(핑크그린)': { img: 'images/hookcap-7.jpg' },
+  '전기도금 훅캡(그린퍼플)': { img: 'images/hookcap-8.jpg' },
+  '전기도금 훅캡(그린핑크)': { img: 'images/hookcap-9.jpg' },
   '전기도금 훅캡': { img: 'images/product-hookcap.jpg' },
   '수제 마이크로박스 에기': { emoji: '📦' },
   '더유닛 에기걸이': { emoji: '🔗' }
 };
 
+// 색상별 사진이 있는 에기걸이: images/colors/{key}-{번호}.jpg (번호는 색상 옵션 순서)
+const COLOR_THUMBS = {
+  '쭈갑 에기걸이': { key: 'zzugap', colors: ['블랙&레인보우', '블랙&네이비', '카키&오렌지', '블랙&레드', '블랙&그린', '블랙&퍼플', '블랙&핑크', '블랙&옐로우'] },
+  '야광팁런에기걸이': { key: 'glow', colors: ['브라운&옐로우', '브라운&그린', '브라운&스카이', '브라운&핑크', '블랙&옐로우', '블랙&그린', '블랙&스카이', '블랙&핑크', '카키&옐로우', '카키&그린', '카키&스카이', '카키&핑크'] },
+  '팁런 에기걸이': { key: 'tiplun', colors: ['블랙&레인보우', '블랙&레드', '카키&오렌지', '블랙&그린', '블랙&네이비', '블랙&퍼플', '블랙&핑크'] }
+};
+
 function getThumb(name) {
+  // 예: '팁런 에기걸이(블랙&레드, 50cm)' → 상품명 '팁런 에기걸이', 색상 '블랙&레드'
+  const m = name.match(/^(.*?)\(([^,)]+)/);
+  if (m && COLOR_THUMBS[m[1]]) {
+    const idx = COLOR_THUMBS[m[1]].colors.indexOf(m[2].trim());
+    if (idx >= 0) return { img: `images/colors/${COLOR_THUMBS[m[1]].key}-${idx + 1}.jpg` };
+  }
   const key = Object.keys(PRODUCT_THUMBS).find(k => name.startsWith(k));
   return key ? PRODUCT_THUMBS[key] : null;
 }
