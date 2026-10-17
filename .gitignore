@@ -1,1 +1,3 @@
 .claude.json
+node_modules/
+.env
