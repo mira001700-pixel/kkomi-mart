@@ -254,7 +254,11 @@
     <div class="modal">
       <h2>🛒 장바구니</h2>
       <div id="cart-items"></div>
-      <div class="cart-total">총 금액: <span id="cart-total">0</span>원</div>
+      <div class="cart-summary">
+        <div class="cart-summary-row"><span>상품 금액</span><span id="cart-base-total">0원</span></div>
+        <div class="cart-summary-row"><span>옵션 금액</span><span id="cart-option-total">0원</span></div>
+        <div class="cart-total"><span>총 금액</span><span><span id="cart-total">0</span>원</span></div>
+      </div>
       <div class="modal-actions">
         <button class="secondary" onclick="closeModal('cart-overlay')">계속 쇼핑하기</button>
         <button class="primary" onclick="openCheckout()">결제하기</button>
@@ -383,13 +387,13 @@
     function addTiplunToCart() {
       const color = document.getElementById('tiplun-color').value;
       const [length, extra] = document.getElementById('tiplun-length').value.split('|');
-      addToCart(`팁런 에기걸이(${color}, ${length})`, 40000 + Number(extra));
+      addToCart(`팁런 에기걸이(${color}, ${length})`, 40000 + Number(extra), Number(extra), length);
     }
 
     function addGlowToCart() {
       const color = document.getElementById('glow-color').value;
       const [length, extra] = document.getElementById('glow-length').value.split('|');
-      addToCart(`야광팁런에기걸이(${color}, ${length})`, 40000 + Number(extra));
+      addToCart(`야광팁런에기걸이(${color}, ${length})`, 40000 + Number(extra), Number(extra), length);
     }
   </script>
 

@@ -19,11 +19,33 @@ function saveCart() {
   localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-function addToCart(name, price) {
+// price: 옵션 포함 개당 가격, extra: 그중 옵션 추가금, optionLabel: 옵션 이름(예: 50cm)
+function addToCart(name, price, extra = 0, optionLabel = '') {
   const item = cart.find(i => i.name === name);
-  if (item) { item.qty++; } else { cart.push({ name, price, qty: 1 }); }
+  if (item) { item.qty++; } else { cart.push({ name, price, extra, optionLabel, qty: 1 }); }
   saveCart();
   updateCartUI();
+}
+
+function won(n) {
+  return n.toLocaleString() + '원';
+}
+
+// 예전에 담긴 상품은 extra가 없으므로 0으로 취급
+function itemExtra(item) {
+  return item.extra || 0;
+}
+
+function priceBreakdown(item) {
+  const extra = itemExtra(item);
+  const base = item.price - extra;
+  if (!item.optionLabel && !extra) return `<span class="cart-item-unit">개당 ${won(item.price)}</span>`;
+  return `
+    <span class="option-chip${extra ? '' : ' free'}">
+      <span class="option-chip-label">옵션 ${item.optionLabel || ''}</span>
+      <span class="option-chip-price">${extra ? '+' + won(extra) : '추가금 없음'}</span>
+    </span>
+    <span class="cart-item-unit">기본 ${won(base)} → 개당 <b>${won(item.price)}</b></span>`;
 }
 
 function changeQty(idx, delta) {
@@ -58,18 +80,24 @@ function updateCartUI() {
       return `
       <div class="cart-item">
         <div class="cart-item-thumb">${thumbHtml}</div>
-        <span class="cart-item-name">${item.name}</span>
+        <div class="cart-item-info">
+          <span class="cart-item-name">${item.name}</span>
+          <span class="cart-item-option">${priceBreakdown(item)}</span>
+        </div>
         <div class="qty-control">
           <button type="button" onclick="changeQty(${idx}, -1)">-</button>
           <span>${item.qty}</span>
           <button type="button" onclick="changeQty(${idx}, 1)">+</button>
         </div>
-        <span class="cart-item-price">${(item.price * item.qty).toLocaleString()}원</span>
+        <span class="cart-item-price">${(item.price * item.qty).toLocaleString()}원${itemExtra(item) ? `<small>옵션 +${won(itemExtra(item) * item.qty)} 포함</small>` : ''}</span>
         <button type="button" class="remove-btn" onclick="removeItem(${idx})">✕</button>
       </div>
     `;
     }).join('');
   }
+  const optionTotal = cart.reduce((sum, i) => sum + itemExtra(i) * i.qty, 0);
+  document.getElementById('cart-base-total').textContent = won(cartTotal() - optionTotal);
+  document.getElementById('cart-option-total').textContent = '+' + won(optionTotal);
   document.getElementById('cart-total').textContent = cartTotal().toLocaleString();
 }
 
@@ -98,7 +126,7 @@ function openCheckout() {
   const shipping = shippingFee();
   const shippingLabel = shipping === 0 ? '무료' : `${shipping.toLocaleString()}원`;
   document.getElementById('checkout-summary').innerHTML = cart.map(i => `
-    <div class="summary-row"><span>${i.name} x${i.qty}</span><span>${(i.price * i.qty).toLocaleString()}원</span></div>
+    <div class="summary-row"><span>${i.name} x${i.qty}${itemExtra(i) ? ` <small>(옵션 +${won(itemExtra(i))})</small>` : ''}</span><span>${(i.price * i.qty).toLocaleString()}원</span></div>
   `).join('')
     + `<div class="summary-row"><span>배송비</span><span>${shippingLabel}</span></div>`
     + `<div class="summary-row total"><span>총 결제금액</span><span>${(cartTotal() + shipping).toLocaleString()}원</span></div>`;
